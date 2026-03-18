@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const authRouter = require('./routes/auth');
 const vehiculesRouter = require('./routes/vehicules')
+const scoresRouter = require('./routes/scores')
 
 // On crée notre application Express
 const app = express();
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 5000
 // on import le fichier
 app.use('/api', authRouter);
 app.use('/api', vehiculesRouter);
+app.use('/api', scoresRouter);
 
 app.get('/', (req, res) => {
     res.json({message: 'CarScore API fonctionne'});

@@ -72,12 +72,53 @@ function calculerScore(vehicule){
      } else {
         scoreCT = 0;
      };
+
+
      let scoreCTBonus = 0;
      if(vehicule.ct ==='valide' && vehicule.entretien ==='complet'){
         scoreCTBonus = 5;
      };
+
+
+     let recommandation = ''
      const scoreGlobal = scoreKilometrage + scoreAnnee + scoreCarburant + scoreRegion + scoreEntretien + scoreCT + scoreCTBonus;
-     return scoreGlobal;
+   if(scoreGlobal >= 80){
+      recommandation = 'Garder - votre voiture a encore beaucoup de valeur';
+   } else if (scoreGlobal >= 60){
+      recommandation = 'Garder encore 1 à 2 ans';
+   } else if (scoreGlobal >= 40){
+      recommandation = 'Envisager la revente dans les 6 mois';
+   } else {
+      recommandation = 'Vendre rapidement avant de perdre encore plus de valeur';
+   };
+
+   const coutMensuel = Math.round(scoreGlobal * 2.5);
+
+   let depreciation = 0;
+   if(ageVehicule < 2){
+      depreciation = 20;
+   } else if (ageVehicule < 5){
+      depreciation = 15;
+   } else {
+      depreciation = 10;
+   }
+
+    const perteAnnuelle = Math.round(coutMensuel * 12 * depreciation / 100);
+
+     return {
+      scoreGlobal,
+      scoreKilometrage,
+      scoreAnnee,
+      scoreCarburant,
+      scoreRegion,
+      scoreEntretien,
+      scoreCT,
+      scoreCTBonus,
+      recommandation,
+      coutMensuel,
+      depreciation,
+      perteAnnuelle
+     };
 
 }
 
