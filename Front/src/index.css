@@ -1,0 +1,1169 @@
+/* ===============================
+   POLICES GOOGLE FONTS
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;600;700&family=DM+Mono:wght@400&display=swap');
+
+/* ===============================
+   VARIABLES — CHOISIR UNE VERSION
+   Décommente la version que tu veux !
+================================ */
+
+/* VERSION 1 — Violet (charte graphique CarScore) */
+/* :root {
+  --accent:       #6366F1;
+  --accent-fonce: #4F46E5;
+  --accent-clair: #EEF2FF;
+  --fond:         #F1F5F9;
+  --texte:        #1E293B;
+  --texte-2:      #475569;
+  --bordure:      #E2E8F0;
+} */
+
+/* VERSION 2 — Bleu marine */
+/* :root {
+  --accent:       #3B82F6;
+  --accent-fonce: #2563EB;
+  --accent-clair: #EFF6FF;
+  --fond:         #F0F4FF;
+  --texte:        #1E3A5F;
+  --texte-2:      #3B5B8C;
+  --bordure:      #DBEAFE;
+} */
+
+
+/* VERSION 3 — Vert nature */
+/* :root {
+  --accent:       #059669;
+  --accent-fonce: #047857;
+  --accent-clair: #ECFDF5;
+  --fond:         #F0FDF4;
+  --texte:        #064E3B;
+  --texte-2:      #065F46;
+  --bordure:      #BBF7D0;
+} */
+
+
+/* VERSION 4 — Orange chaleureux */
+:root {
+  --accent:       #EA580C;
+  --accent-fonce: #C2410C;
+  --accent-clair: #FFF7ED;
+  --fond:         #FEF3E2;
+  --texte:        #431407;
+  --texte-2:      #7C2D12;
+  --bordure:      #FED7AA;
+}
+
+
+/* Couleurs communes à toutes les versions */
+:root {
+  --blanc:  #FFFFFF;
+  --gris:   #94A3B8;
+  --vert:   #10B981;
+  --bleu:   #0EA5E9;
+  --orange: #F59E0B;
+  --rouge:  #EF4444;
+}
+
+/* ===============================
+   RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--fond);
+  color: var(--texte);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===============================
+   HEADER
+================================ */
+header {
+  background-color: var(--blanc);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--bordure);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+nav ul button {
+  background: none;
+  border: none;
+  color: var(--texte-2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+nav ul button:hover {
+  background-color: var(--fond);
+  color: var(--texte);
+}
+
+.logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: var(--accent);
+}
+
+/* ===============================
+   MAIN
+================================ */
+main {
+  padding: 60px 0;
+}
+
+main section {
+  margin-bottom: 60px;
+}
+
+main section > h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--texte);
+}
+
+/* ===============================
+   HERO
+================================ */
+.hero {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.hero h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+  color: var(--texte);
+}
+
+.hero p {
+  color: var(--texte-2);
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+/* ===============================
+   BOUTONS
+================================ */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+.btn:hover {
+  background-color: var(--accent-fonce);
+}
+
+.btn-nav {
+  background-color: var(--accent) !important;
+  color: white !important;
+  border-radius: 9999px !important;
+  padding: 8px 16px !important;
+  border: none !important;
+  font-weight: 700 !important;
+}
+
+.btn-nav:hover {
+  background-color: var(--accent-fonce) !important;
+}
+
+.btn-full {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-full:hover {
+  background-color: var(--accent-fonce);
+}
+
+/* ===============================
+   GRID
+================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.two-col {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* ===============================
+   CARDS
+================================ */
+.card {
+  background-color: var(--blanc);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--bordure);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--texte);
+}
+
+/* ===============================
+   FORMULAIRES
+================================ */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+input, select {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--bordure);
+  background-color: var(--blanc);
+  color: var(--texte);
+  width: 100%;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+input::placeholder {
+  color: var(--gris);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+select option {
+  background-color: var(--blanc);
+}
+
+button {
+  padding: 12px;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: var(--accent-fonce);
+}
+
+.form-section {
+  max-width: 500px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.form-subtitle {
+  color: var(--texte-2);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.form-hint {
+  font-size: 0.8rem;
+  color: var(--gris);
+  margin-top: 4px;
+}
+
+.form-link {
+  text-align: center;
+  margin-top: 16px;
+  color: var(--gris);
+  font-size: 0.9rem;
+}
+
+.form-link button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0;
+  box-shadow: none;
+}
+
+.erreur {
+  color: var(--rouge);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(239, 68, 68, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ===============================
+   FIELDSET
+================================ */
+fieldset {
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: var(--blanc);
+}
+
+legend {
+  padding: 0 8px;
+  color: var(--texte-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ===============================
+   SCORE BLOCK
+================================ */
+.score-block {
+  background-color: var(--blanc);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid var(--bordure);
+  margin-top: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-score {
+  font-family: 'Fraunces', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.dashboard-score span {
+  font-size: 2rem;
+  color: var(--gris);
+}
+
+.score-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.score-blue-label   { color: var(--bleu); }
+.score-green-label  { color: var(--vert); }
+.score-orange-label { color: var(--orange); }
+.score-red-label    { color: var(--rouge); }
+
+.score-reco {
+  color: var(--texte-2);
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+.score-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.score-blue-bg  { background-color: #EFF6FF; color: var(--bleu); }
+.score-green-bg { background-color: #ECFDF5; color: var(--vert); }
+.score-red-bg   { background-color: #FEF2F2; color: var(--rouge); }
+
+/* ===============================
+   SCORE GRID — HOME
+================================ */
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  list-style: none;
+  margin-top: 24px;
+}
+
+.score-item {
+  background-color: var(--blanc);
+  border-radius: 12px;
+  padding: 24px;
+  border-left: 4px solid;
+  border-top: 1px solid var(--bordure);
+  border-right: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.score-item strong {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.3rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.score-item span {
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.score-item p {
+  font-size: 0.88rem;
+  color: var(--texte-2);
+}
+
+.score-green  { border-left-color: var(--vert); }
+.score-green  strong, .score-green  span { color: var(--vert); }
+
+.score-blue   { border-left-color: var(--bleu); }
+.score-blue   strong, .score-blue   span { color: var(--bleu); }
+
+.score-orange { border-left-color: var(--orange); }
+.score-orange strong, .score-orange span { color: var(--orange); }
+
+.score-red    { border-left-color: var(--rouge); }
+.score-red    strong, .score-red    span { color: var(--rouge); }
+
+/* ===============================
+   CARD VALUES
+================================ */
+.card-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 8px 0;
+}
+
+.card-hint {
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+
+/* ===============================
+   VEHICLE CARD
+================================ */
+.vehicle-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.vehicle-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--texte);
+}
+
+.vehicle-info ul {
+  list-style: none;
+  color: var(--texte-2);
+  font-size: 0.9rem;
+}
+
+.vehicle-info ul li {
+  margin-bottom: 6px;
+}
+
+.vehicle-score {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ===============================
+   TIP CARD
+================================ */
+.tip-card {
+  border-left: 4px solid var(--accent);
+}
+
+.tip-card p {
+  color: var(--texte-2);
+  line-height: 1.7;
+}
+
+/* ===============================
+   CRITERIA DETAIL
+================================ */
+.criteria-detail-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.criteria-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.criteria-info h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.criteria-info p {
+  color: var(--texte-2);
+  font-size: 0.9rem;
+}
+
+.criteria-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.score-green-text  { color: var(--vert); }
+.score-blue-text   { color: var(--bleu); }
+.score-orange-text { color: var(--orange); }
+.score-red-text    { color: var(--rouge); }
+
+/* ===============================
+   HOME — ÉTAPES ET CRITÈRES
+================================ */
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.criteria-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: var(--texte-2);
+  margin-bottom: 16px;
+  max-width: 700px;
+}
+
+.cta-final {
+  background-color: var(--accent-clair);
+  border-radius: 16px;
+  padding: 60px 20px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ===============================
+   ADMIN DASHBOARD
+================================ */
+.admin-badge {
+  background-color: var(--accent-clair);
+  color: var(--accent-fonce);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.kpi-card {
+  border-top: 3px solid;
+}
+
+.kpi-blue   { border-top-color: var(--bleu); }
+.kpi-green  { border-top-color: var(--vert); }
+.kpi-orange { border-top-color: var(--orange); }
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--texte-2);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--texte);
+}
+
+.kpi-value-suffix {
+  font-size: 1rem;
+  color: var(--gris);
+}
+
+.kpi-trend {
+  font-size: 0.8rem;
+  color: var(--vert);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.kpi-trend.neutral { color: var(--gris); }
+.kpi-trend.down    { color: var(--rouge); }
+
+/* ===============================
+   TABLE
+================================ */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead {
+  background-color: var(--fond);
+}
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--texte-2);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bordure);
+  color: var(--texte);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: var(--fond);
+}
+
+.status-active   { color: var(--vert); font-weight: 700; }
+.status-inactive { color: var(--gris); font-weight: 600; }
+
+.action-btn {
+  background: none;
+  border: 1px solid var(--bordure);
+  color: var(--texte);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 4px;
+  box-shadow: none;
+}
+
+.action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.action-btn.danger {
+  color: var(--rouge);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.action-btn.danger:hover {
+  background-color: var(--rouge);
+  color: white;
+}
+
+.score-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background-color: var(--fond);
+  color: var(--texte);
+}
+
+.score-circle.excellent { background-color: #ECFDF5; color: var(--vert); }
+.score-circle.good      { background-color: #EFF6FF; color: var(--bleu); }
+.score-circle.medium    { background-color: #FFFBEB; color: var(--orange); }
+.score-circle.critical  { background-color: #FEF2F2; color: var(--rouge); }
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--fond);
+  color: var(--texte);
+}
+
+.badge-blue   { background-color: #EFF6FF; color: var(--bleu); }
+.badge-green  { background-color: #ECFDF5; color: var(--vert); }
+.badge-orange { background-color: #FFFBEB; color: var(--orange); }
+
+/* ===============================
+   GRAPHIQUE ACTIVITÉ
+================================ */
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 110px;
+  margin: 16px 0 8px;
+}
+
+.chart-bar {
+  flex: 1;
+  background-color: var(--bordure);
+  border-radius: 4px 4px 0 0;
+}
+
+.chart-bar.highlight {
+  background-color: var(--accent);
+}
+
+.bar-35  { height: 35%; }
+.bar-42  { height: 42%; }
+.bar-45  { height: 45%; }
+.bar-48  { height: 48%; }
+.bar-50  { height: 50%; }
+.bar-55  { height: 55%; }
+.bar-60  { height: 60%; }
+.bar-65  { height: 65%; }
+.bar-70  { height: 70%; }
+.bar-82  { height: 82%; }
+.bar-100 { height: 100%; }
+
+.chart-labels {
+  display: flex;
+  gap: 4px;
+}
+
+.chart-label {
+  flex: 1;
+  font-size: 0.7rem;
+  color: var(--gris);
+  text-align: center;
+}
+
+/* ===============================
+   RÉPARTITION CARBURANT
+================================ */
+.fuel-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.fuel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fuel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.fuel-dot-blue   { background-color: var(--bleu); }
+.fuel-dot-grey   { background-color: var(--gris); }
+.fuel-dot-green  { background-color: var(--vert); }
+.fuel-dot-orange { background-color: var(--orange); }
+
+.fuel-name {
+  font-size: 0.85rem;
+  width: 70px;
+  flex-shrink: 0;
+  color: var(--texte-2);
+}
+
+.fuel-bar-track {
+  flex: 1;
+  height: 6px;
+  background-color: var(--bordure);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.fuel-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.fuel-fill-blue   { background-color: var(--bleu); }
+.fuel-fill-grey   { background-color: var(--gris); }
+.fuel-fill-green  { background-color: var(--vert); }
+.fuel-fill-orange { background-color: var(--orange); }
+
+.fuel-fill-48 { width: 48%; }
+.fuel-fill-30 { width: 30%; }
+.fuel-fill-15 { width: 15%; }
+.fuel-fill-7  { width: 7%; }
+
+.fuel-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  width: 36px;
+  text-align: right;
+  color: var(--texte-2);
+}
+
+/* ===============================
+   DISTRIBUTION SCORES
+================================ */
+.score-bars {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.score-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.score-bar-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  width: 160px;
+  flex-shrink: 0;
+  color: var(--texte);
+}
+
+.score-bar-track {
+  flex: 1;
+  height: 8px;
+  background-color: var(--bordure);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.bar-fill-green  { background-color: var(--vert); }
+.bar-fill-blue   { background-color: var(--bleu); }
+.bar-fill-orange { background-color: var(--orange); }
+.bar-fill-red    { background-color: var(--rouge); }
+
+.bar-fill-22 { width: 22%; }
+.bar-fill-48 { width: 48%; }
+.bar-fill-23 { width: 23%; }
+.bar-fill-7  { width: 7%; }
+
+.score-bar-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gris);
+  width: 32px;
+  text-align: right;
+}
+
+/* ===============================
+   RÉGIONS & MARQUES
+================================ */
+.region-list {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.region-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.region-item:last-child {
+  border-bottom: none;
+}
+
+.region-name {
+  font-size: 0.9rem;
+  color: var(--texte);
+}
+
+.region-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--gris);
+}
+
+/* ===============================
+   SR-ONLY
+================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer {
+  background-color: var(--blanc);
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 60px;
+  color: var(--gris);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--bordure);
+}
+
+/* ===============================
+   RESPONSIVE MOBILE
+================================ */
+/* ===============================
+   MOBILE — max 768px
+================================ */
+@media (max-width: 768px) {
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-score {
+    font-size: 3.5rem;
+  }
+
+  .vehicle-card {
+    flex-direction: column;
+  }
+
+  .criteria-detail-item {
+    flex-direction: column;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .score-grid {
+    grid-template-columns: 1fr;
+  }
+
+  nav ul {
+    gap: 4px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+
+  .score-bar-label {
+    width: 110px;
+  }
+
+  .chart-bars {
+    height: 80px;
+  }
+}
+
+/* ===============================
+   IPAD — 769px à 1024px
+================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .container {
+    width: 92%;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .dashboard-score {
+    font-size: 4rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .score-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vehicle-card {
+    flex-direction: row;
+  }
+}
+
+/* ===============================
+   DESKTOP — min 1025px
+================================ */
+@media (min-width: 1025px) {
+
+  .container {
+    width: 90%;
+    max-width: 1100px;
+  }
+
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+
+  .dashboard-score {
+    font-size: 5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .score-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vehicle-card {
+    flex-direction: row;
+  }
+}

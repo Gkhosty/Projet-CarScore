@@ -1,41 +1,135 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
+import type { Score } from "../types/index";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function CarDetails() {
-
-    const [score, setScore] = useState<any>(null);
+    const [score, setScore] = useState<Score | null>(null);
     const { id } = useParams();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        async function chargerScore() {
+            const response = await fetch(`http://localhost:5000/api/scores/${id}`, {
+                headers: {
+                    'authorization': 'Bearer ' + sessionStorage.getItem('token')
+                }
+            })
+            const data = await response.json()
+            setScore(data.score)
+        }
+        chargerScore()
+    }, [])
 
-useEffect(() => {
-async function chargerScore() {
-        const response = await fetch(`http://localhost:5000/api/scores/${id}`, {
-            headers: {
-                'authorization': 'Bearer ' + sessionStorage.getItem('token')
-            }
-        })
-        const data = await response.json()
-        setScore(data.score)
-    }
-    chargerScore()
-}, [])
-if (!score) return <p>Chargement...</p>
+    if (!score) return <p>Chargement...</p>
 
-return (
-    <div>
-        <h1>Detail du véhicule</h1>
-        <p>Score global : {score.score_global}/100</p>
-        <p>Score kilométrage : {score.score_kilometrage}/20</p>
-        <p>Score année : {score.score_annee}/20</p>
-        <p>Score carburant : {score.score_carburant}/15</p>
-        <p>Score région : {score.score_region}/15</p>
-        <p>Score entretien : {score.score_entretien}/10</p>
-        <p>Score CT : {score.score_tc}/5</p>
-        <p>Recommandation : {score.recommandation}</p>
-        <p>Coût mensuel : {score.cout_mensuel} €</p>
-        <p>Dépréciation : {score.depreciation} %/an</p>
-        <p>Perte annuelle : {score.perte_annuelle} €/an</p>
-    </div>
-)
-};
+    return (
+        <>
+            <Header type="user" />
+
+            <main className="container">
+
+                {/* EN-TETE VEHICULE */}
+                <section aria-labelledby="vehicle-title">
+                    <h2 id="vehicle-title">Analyse de votre véhicule</h2>
+                    <p className="form-subtitle">Analyse complète fondée sur 6 critères du marché automobile français.</p>
+                </section>
+
+                {/* SCORE GLOBAL */}
+                <section className="score-block" aria-labelledby="score-title">
+                    <h2 id="score-title" className="sr-only">Score global</h2>
+                    <p className="dashboard-score" aria-label={`Score global : ${score.score_global} sur 100`}>
+                        {score.score_global}<span>/100</span>
+                    </p>
+                    <p className="score-reco">
+                        Recommandation : <strong>{score.recommandation}</strong>
+                    </p>
+                </section>
+
+                {/* DETAIL DES 6 CRITERES */}
+                <section aria-labelledby="criteria-title">
+                    <h2 id="criteria-title">Analyse par critère</h2>
+                    <ul className="criteria-detail-list" role="list">
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>📏 Kilométrage</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_kilometrage} / 20</div>
+                        </li>
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>📅 Année de mise en circulation</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_annee} / 20</div>
+                        </li>
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>⛽ Type de carburant</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_carburant} / 15</div>
+                        </li>
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>📍 Région</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_region} / 15</div>
+                        </li>
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>🔧 Carnet d'entretien</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_entretien} / 10</div>
+                        </li>
+
+                        <li className="card criteria-detail-item">
+                            <div className="criteria-info">
+                                <h3>✅ Contrôle technique</h3>
+                            </div>
+                            <div className="criteria-score">{score.score_tc} / 5</div>
+                        </li>
+
+                    </ul>
+                </section>
+
+                {/* ANALYSE FINANCIERE */}
+                <section aria-labelledby="finance-title">
+                    <h2 id="finance-title">Analyse financière</h2>
+                    <ul className="grid" role="list">
+                        <li className="card">
+                            <h3>💰 Coût mensuel estimé</h3>
+                            <p className="card-value">{score.cout_mensuel} €</p>
+                            <p className="card-hint">Entretien courant et dépréciation mensuelle inclus</p>
+                        </li>
+                        <li className="card">
+                            <h3>📉 Dépréciation annuelle</h3>
+                            <p className="card-value">~{score.perte_annuelle} €</p>
+                            <p className="card-hint">Estimation basée sur le taux de dépréciation moyen</p>
+                        </li>
+                        <li className="card">
+                            <h3>📆 Période de revente conseillée</h3>
+                            <p className="card-value">{score.periode_revente}</p>
+                            <p className="card-hint">Les prix sont mieux soutenus avant les vacances d'été</p>
+                        </li>
+                    </ul>
+                </section>
+
+                {/* RECOMMANDATION FINALE */}
+                <section className="card tip-card" aria-labelledby="reco-title">
+                    <h2 id="reco-title">📋 Recommandation CarScore</h2>
+                    <p>Score global : <strong>{score.score_global}/100</strong></p>
+                    <p>Notre recommandation : <strong>{score.recommandation}</strong></p>
+                    <p>Période idéale de revente : <strong>{score.periode_revente}</strong></p>
+                </section>
+
+            </main>
+
+            <Footer />
+        </>
+    )
+}

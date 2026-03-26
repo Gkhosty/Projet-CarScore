@@ -8,20 +8,28 @@ import Dashboard from './pages/Dashboard';
 import AddCar from './pages/AddCar';
 import CarDetails from './pages/CarDetails';
 import AdminDashboard from './pages/AdminDashboard';
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
     return (
         <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/add-car" element={<AddCar />} />
-            <Route path="/car/:id" element={<CarDetails />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/dashboard" element={
+                    <ProtectedRoute><Dashboard /></ProtectedRoute>
+                } />
+                <Route path="/add-car" element={
+                    <ProtectedRoute><AddCar /></ProtectedRoute>
+                } />
+                <Route path="/car/:id" element={
+                    <ProtectedRoute><CarDetails /></ProtectedRoute>
+                } />
+                <Route path="/admin" element={
+                    <ProtectedRoute><AdminDashboard /></ProtectedRoute>
+                } />
+            </Routes>
         </BrowserRouter>
     );
 }

@@ -17,7 +17,16 @@ router.post('/vehicules', async (req, res) => {
 });
 
 router.get('/vehicules', async (req, res) => {
-    const vehicules = await sql`SELECT * FROM vehicules`;
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    const decoded = jwt.decode(token);
+    const user_id = decoded.id;
+
+    const vehicules = await sql`
+        SELECT vehicules.*, scores.score_global 
+        FROM vehicules 
+        LEFT JOIN scores ON vehicules.id = scores.vehicule_id
+        WHERE vehicules.user_id = ${user_id}
+    `;
     res.json(vehicules);
 })
 
