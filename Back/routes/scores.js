@@ -3,8 +3,9 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const calculerScore = require('../utils/scoring');
+const verifierToken = require('../middleware/auth')
 
-router.post('/scores', async (req, res) =>{
+router.post('/scores', verifierToken, async (req, res) =>{
     const { vehicule_id } = req.body;
     const id = parseInt(vehicule_id);
     const result = await sql`SELECT * FROM vehicules WHERE id = ${id}`;
@@ -21,7 +22,7 @@ router.post('/scores', async (req, res) =>{
 })
 
 
-router.get('/scores/:vehicule_id', async (req, res) =>{
+router.get('/scores/:vehicule_id', verifierToken, async (req, res) =>{
     const vehicule_id = parseInt(req.params.vehicule_id);
     const result = await sql`SELECT * FROM scores WHERE vehicule_id = ${vehicule_id}`;
     const score = result[0];

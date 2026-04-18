@@ -7,9 +7,11 @@ import Header from "../components/header";
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
     const navigate = useNavigate();
+    // useEff se declanche une seule fois au chargement de la page ,
 
     useEffect(() => {
         async function chargerVehicules() {
+            // on fait une requit pour cette api pour recuperer tous les vehicules de users connecté
             const response = await fetch('http://localhost:5000/api/vehicules', {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -20,6 +22,28 @@ export default function Dashboard() {
         }
         chargerVehicules()
     }, [])
+     // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
+    async function supprimerVehicule(id: number) {
+        const confirmation = window.confirm('Voulez-vous vraiment supprimer ce véhicule ?')
+        if (!confirmation){
+            return
+        }
+
+        await fetch(`http://localhost:5000/api/vehicules/${id}`,{
+            method: 'DELETE',
+            headers: {
+                'authorization': 'Bearer ' + sessionStorage.getItem('token'),
+            }
+        });
+        const nouveauxVehicules = vehicules.filter(function(vehicule) {
+            return vehicule.id !==id
+        });
+
+        setVehicules(nouveauxVehicules)
+
+    }
+
+
 
     return (
         <>
@@ -93,6 +117,7 @@ export default function Dashboard() {
                                     <button className="btn" onClick={() => navigate(`/car/${vehicule.id}`)}>
                                         Voir l'analyse complète
                                     </button>
+                                    <button className="btn" onClick={function(){ supprimerVehicule(vehicule.id)}}>Supprimer ce véhicule</button>
                                 </div>
                             </article>
                         </section>

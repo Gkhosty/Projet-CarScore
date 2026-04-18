@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import type { Score } from "../types/index";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -7,7 +7,6 @@ import Footer from "../components/footer";
 export default function CarDetails() {
     const [score, setScore] = useState<Score | null>(null);
     const { id } = useParams();
-    const navigate = useNavigate();
 
     useEffect(() => {
         async function chargerScore() {

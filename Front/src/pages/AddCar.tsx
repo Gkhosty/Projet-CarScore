@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -12,7 +12,21 @@ export default function AddCar() {
     const [region, setRegion] = useState('');
     const [entretien, setEntretien] = useState('');
     const [ct, setCt] = useState('');
+    const [nombreVehicules, setNombreVehicules] = useState(0)
     const navigate = useNavigate();
+
+    useEffect(function() {
+        async function verifierNombreVehicules() {
+            const response = await fetch('http://localhost:5000/api/vehicules', {
+                headers: {
+                    'authorization': 'Bearer ' + sessionStorage.getItem('token')
+                }
+            });
+            const data = await response.json()
+            setNombreVehicules(data.length)
+        }
+        verifierNombreVehicules()
+    }, []);
 
     async function handleAddCar(event: any) {
         event.preventDefault();
@@ -25,6 +39,10 @@ export default function AddCar() {
             body: JSON.stringify({ marque, modele, annee, kilometrage, carburant, region, entretien, ct })
         });
         const data = await response.json()
+        if(data.erreur){
+            alert(data.erreur)
+            return
+        }
         if (data.message) {
             await fetch('http://localhost:5000/api/scores', {
                 method: 'POST',
@@ -36,6 +54,19 @@ export default function AddCar() {
             })
             navigate('/dashboard')
         }
+    }
+
+    if ( nombreVehicules >=5){
+        return (<>
+        <Header type= "user" />
+        <main className="container">
+            <section>
+                <h2>Limite atteinte !</h2>
+                <p>Vous avez atteint la limite de 5 véhicules. Supprimez un véhicule pour ajouter un nouveau.</p>
+                <button className="btn" onClick={function() { navigate('/dashboard') }}>Retour au dashboard</button>
+            </section>
+        </main>
+        </>)
     }
 
     return (

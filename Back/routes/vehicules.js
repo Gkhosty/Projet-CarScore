@@ -2,24 +2,28 @@ const express = require('express');
 const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+const verifierToken = require('../middleware/auth');
 
-router.post('/vehicules', async (req, res) => {
+router.post('/vehicules', verifierToken, async (req, res) => {
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
+    // ke middleware verifiertoken a deja decodé le token
+    const user_id = req.user.id;
+    //  On Verifie le nombre de vehicule avant d'ajouter
+    const count = await sql`SELECT COUNT(*) FROM vehicules WHERE user_id = ${user_id}`;
+    const nombreVehicules = parseInt(count[0].count);
 
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    const decoded = jwt.decode(token);
-    const user_id = decoded.id;
+    if (nombreVehicules >= 5){
+        return res.status(400).json({ erreur: 'Vous avez atteint la limite de 5 véhicules !' })
+    }
 
     const ajouterVehicule = await sql`INSERT INTO vehicules ( user_id, marque, modele, annee, kilometrage, carburant, region, entretien, ct ) 
     VALUES (${user_id},${marque}, ${modele}, ${annee}, ${kilometrage}, ${carburant}, ${region}, ${entretien}, ${ct}) RETURNING *`;
     res.json({ message: 'Vehicule ajoute avec succes ✅', vehicule: ajouterVehicule[0]});
 });
 
-router.get('/vehicules', async (req, res) => {
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    const decoded = jwt.decode(token);
-    const user_id = decoded.id;
+router.get('/vehicules', verifierToken, async (req, res) => {
+
+    const user_id = req.user.id;
 
     const vehicules = await sql`
         SELECT vehicules.*, scores.score_global 
@@ -30,7 +34,7 @@ router.get('/vehicules', async (req, res) => {
     res.json(vehicules);
 })
 
-router.delete('/vehicules/:id', async (req, res) => {
+router.delete('/vehicules/:id', verifierToken, async (req, res) => {
     const id = parseInt(req.params.id);
     const result = await sql`DELETE FROM vehicules WHERE id = ${id}`;
     res.json(result);

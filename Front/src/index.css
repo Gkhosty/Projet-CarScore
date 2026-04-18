@@ -8,42 +8,6 @@
    Décommente la version que tu veux !
 ================================ */
 
-/* VERSION 1 — Violet (charte graphique CarScore) */
-/* :root {
-  --accent:       #6366F1;
-  --accent-fonce: #4F46E5;
-  --accent-clair: #EEF2FF;
-  --fond:         #F1F5F9;
-  --texte:        #1E293B;
-  --texte-2:      #475569;
-  --bordure:      #E2E8F0;
-} */
-
-/* VERSION 2 — Bleu marine */
-/* :root {
-  --accent:       #3B82F6;
-  --accent-fonce: #2563EB;
-  --accent-clair: #EFF6FF;
-  --fond:         #F0F4FF;
-  --texte:        #1E3A5F;
-  --texte-2:      #3B5B8C;
-  --bordure:      #DBEAFE;
-} */
-
-
-/* VERSION 3 — Vert nature */
-/* :root {
-  --accent:       #059669;
-  --accent-fonce: #047857;
-  --accent-clair: #ECFDF5;
-  --fond:         #F0FDF4;
-  --texte:        #064E3B;
-  --texte-2:      #065F46;
-  --bordure:      #BBF7D0;
-} */
-
-
-/* VERSION 4 — Orange chaleureux */
 :root {
   --accent:       #EA580C;
   --accent-fonce: #C2410C;
@@ -53,7 +17,6 @@
   --texte-2:      #7C2D12;
   --bordure:      #FED7AA;
 }
-
 
 /* Couleurs communes à toutes les versions */
 :root {
@@ -139,6 +102,20 @@ nav ul button:hover {
   font-weight: 900;
   font-size: 1.3rem;
   color: var(--accent);
+}
+
+/* ===============================
+   HAMBURGER
+================================ */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--texte);
+  padding: 8px;
+  box-shadow: none;
 }
 
 /* ===============================
@@ -804,6 +781,7 @@ tr:hover td {
   font-weight: 700;
   background-color: var(--fond);
   color: var(--texte);
+  text-transform: capitalize;
 }
 
 .badge-blue   { background-color: #EFF6FF; color: var(--bleu); }
@@ -1002,6 +980,7 @@ tr:hover td {
 .region-name {
   font-size: 0.9rem;
   color: var(--texte);
+
 }
 
 .region-count {
@@ -1032,15 +1011,12 @@ footer {
   background-color: var(--blanc);
   padding: 20px 0;
   text-align: center;
-  margin-top: 60px;
+  margin-top: 200px;
   color: var(--gris);
   font-size: 0.875rem;
   border-top: 1px solid var(--bordure);
 }
 
-/* ===============================
-   RESPONSIVE MOBILE
-================================ */
 /* ===============================
    MOBILE — max 768px
 ================================ */
@@ -1070,10 +1046,6 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  nav ul {
-    gap: 4px;
-  }
-
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1093,6 +1065,34 @@ footer {
   .chart-bars {
     height: 80px;
   }
+
+  .hamburger {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+nav ul.ouvert {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--blanc);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  width: 280px;
+  gap: 12px;
+}
+nav ul.ouvert li button {
+  width: 100%;
+  text-align: center;
+}
 }
 
 /* ===============================

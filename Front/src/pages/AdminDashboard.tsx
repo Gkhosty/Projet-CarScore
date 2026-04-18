@@ -136,9 +136,27 @@ export default function AdminDashboard() {
                                     <tr key={analyse.id}>
                                         <td>{analyse.marque} {analyse.modele} — {analyse.annee}</td>
                                         <td>{analyse.nom}</td>
-                                        <td><span className="score-circle">{analyse.score_global}</span></td>
-                                        <td><span className="badge">{analyse.carburant}</span></td>
-                                        <td>{analyse.region}</td>
+                                        <td>
+                                            <span className={
+                                                analyse.score_global >= 80 ? 'score-circle excellent' :
+                                                analyse.score_global >= 60 ? 'score-circle good' :
+                                                analyse.score_global >= 40 ? 'score-circle medium' :
+                                                'score-circle critical'
+                                            }>
+                                                {analyse.score_global}
+                                            </span>
+                                        </td>
+                                        <td>
+                                        <span className={
+                                            analyse.carburant === 'hybride' || analyse.carburant === 'electrique' ? 'badge badge-green' :
+                                            analyse.carburant === 'essence' ? 'badge badge-blue' :
+                                            analyse.carburant === 'diesel' ? 'badge' :
+                                            'badge badge-orange'
+                                        }>
+                                            {analyse.carburant}
+                                        </span>
+                                    </td>
+                                        <td style={{ textTransform: 'capitalize' }}>{analyse.region}</td>
                                         <td>{new Date(analyse.created_at).toLocaleDateString('fr-FR')}</td>
                                     </tr>
                                 ))}

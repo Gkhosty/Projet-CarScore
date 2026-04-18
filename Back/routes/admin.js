@@ -18,7 +18,7 @@ router.get('/admin/stats', verifierToken, async (req, res) => {
 });
 
 router.get('/admin/users', verifierToken, async (req, res) => {
-    const users = await sql`SELECT id, nom, email, role, created_at FROM users`;
+    const users = await sql`SELECT id, nom, email, role, verifie, created_at FROM users`;
     res.json({ users });
 });
 

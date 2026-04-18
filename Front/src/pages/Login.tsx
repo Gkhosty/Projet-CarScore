@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -32,8 +30,7 @@ export default function Login() {
 
     return (
         <>
-            <Header type="auth" />
-
+        
             <main className="container">
                 <section className="form-section" aria-labelledby="login-title">
                     <h2 id="login-title">Connexion</h2>
@@ -70,6 +67,11 @@ export default function Login() {
                         {erreur && <p className="erreur">{erreur}</p>}
 
                         <button type="submit" className="btn-full">Se connecter</button>
+                        <p className="form-link">
+                            <button onClick={() => navigate('/forgot-password')}>
+                                Mot de pass oublié ?
+                            </button>
+                        </p>
 
                     </form>
 
@@ -81,7 +83,6 @@ export default function Login() {
                 </section>
             </main>
 
-                <Footer />
         </>
     )
 }
