@@ -6,6 +6,10 @@ import Footer from "../components/footer";
 export default function AddCar() {
     const [marque, setMarque] = useState('');
     const [modele, setModele] = useState('');
+    const [marques, setMarques] = useState<string[]>([]);
+    const [modeles, setModeles] = useState<string[]>([]);
+    const [showMarques, setShowMarques] = useState(false);
+    const [showModeles, setShowModeles] = useState(false);
     const [annee, setAnnee] = useState('');
     const [kilometrage, setKilometrage] = useState('');
     const [carburant, setCarburant] = useState('');
@@ -24,6 +28,14 @@ export default function AddCar() {
             });
             const data = await response.json()
             setNombreVehicules(data.length)
+
+            // charger les marques et modeles depuis une api
+            const responseMarques = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
+            const dataMarques = await responseMarques.json();
+            const nomsMarques = dataMarques.Results.map(function(marque: any) {
+                return marque.Make_Name;
+            });
+            setMarques(nomsMarques);
         }
         verifierNombreVehicules()
     }, []);
@@ -56,6 +68,15 @@ export default function AddCar() {
         }
     }
 
+    async function chargerModeles() {
+        const responseModeles = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/' + marque + '?format=json')
+        const dataModeles = await responseModeles.json()
+        const nomsModeles = dataModeles.Results.map(function(modeleItem: any) {
+            return modeleItem.Model_Name
+        })
+        setModeles(nomsModeles)
+    }
+
     if ( nombreVehicules >=5){
         return (<>
         <Header type= "user" />
@@ -86,26 +107,77 @@ export default function AddCar() {
 
                             <div className="form-group">
                                 <label htmlFor="marque">Marque</label>
-                                <input
+                                 <input
                                     type="text"
                                     id="marque"
                                     placeholder="Ex : Peugeot, Renault, BMW"
                                     value={marque}
-                                    onChange={(event) => setMarque(event.target.value)}
+                                    
+                                    onChange={function(event) {
+                                        setMarque(event.target.value)
+                                        setShowMarques(true)
+                                    }}
                                     required
                                 />
+                                {showMarques && marque.length > 0 && (
+                                        <ul className="autocomplete-list">
+                                            {marques
+                                                .filter(function(marqueItem) {
+                                                    return marqueItem.toLowerCase().includes(marque.toLowerCase())
+                                                })
+                                                .slice(0, 5)
+                                                .map(function(marqueItem) {
+                                                    return (
+                                                        <li key={marqueItem} onClick={function() {
+                                                            setMarque(marqueItem)
+                                                            setShowMarques(false)
+                                                        }}>
+                                                            {marqueItem}
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    )}
                             </div>
 
-                            <div className="form-group">
+                           <div className="form-group">
                                 <label htmlFor="modele">Modèle</label>
                                 <input
                                     type="text"
                                     id="modele"
                                     placeholder="Ex : 208, Clio, Série 3"
                                     value={modele}
-                                    onChange={(event) => setModele(event.target.value)}
+                    
+                                    onChange={async function(event) {
+                                        setModele(event.target.value)
+                                        setShowModeles(true)
+                                        if (marque.length > 0) {
+                                            await chargerModeles()
+                                        }
+                                    }}
                                     required
                                 />
+                                {showModeles && modele.length > 0 && (
+                                    <ul className="autocomplete-list">
+                                        {modeles
+                                            .filter(function(modeleItem) {
+                                                return modeleItem.toLowerCase().includes(modele.toLowerCase())
+                                            })
+                                            .slice(0, 5)
+                                            .map(function(modeleItem) {
+                                                return (
+                                                    <li key={modeleItem} onClick={function() {
+                                                        setModele(modeleItem)
+                                                        setShowModeles(false)
+                                                    }}>
+                                                        {modeleItem}
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                )}
                             </div>
 
                             <div className="form-row">

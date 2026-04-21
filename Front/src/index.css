@@ -316,6 +316,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
 }
 
 .form-row {
@@ -956,6 +957,30 @@ tr:hover td {
   color: var(--gris);
   width: 32px;
   text-align: right;
+}
+
+.autocomplete-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+    background-color: var(--blanc);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 100;
+}
+
+.autocomplete-list li {
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+    background-color: var(--accent-clair);
+    color: var(--accent);
 }
 
 /* ===============================
