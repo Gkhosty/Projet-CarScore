@@ -1,0 +1,34 @@
+name: CarScore CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Installer pnpm
+        run: npm install -g pnpm
+
+      - name: Tester le backend
+        run: |
+          cd back
+          pnpm install
+          pnpm test
+
+      - name: Tester le frontend
+        run: |
+          cd front
+          pnpm install
+          pnpm test

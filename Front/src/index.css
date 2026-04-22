@@ -1,12 +1,8 @@
-/* ===============================
-   POLICES GOOGLE FONTS
-================================ */
+   /* POLICES GOOGLE FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=DM+Sans:wght@400;600;700&family=DM+Mono:wght@400&display=swap');
 
-/* ===============================
-   VARIABLES — CHOISIR UNE VERSION
-   Décommente la version que tu veux !
-================================ */
+   /* VARIABLES — CHOISIR UNE VERSION */
+   /* Décommente la version que tu veux ! */
 
 :root {
   --accent:       #EA580C;
@@ -28,10 +24,9 @@
   --rouge:  #EF4444;
 }
 
-/* ===============================
-   RESET
-================================ */
-* {
+   /* RESET */
+
+   * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -45,19 +40,17 @@ body {
   line-height: 1.6;
 }
 
-/* ===============================
-   CONTAINER
-================================ */
-.container {
+   /* CONTAINER */
+
+   .container {
   width: 90%;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* ===============================
-   HEADER
-================================ */
-header {
+   /* HEADER */
+
+   header {
   background-color: var(--blanc);
   padding: 20px 0;
   position: sticky;
@@ -104,10 +97,9 @@ nav ul button:hover {
   color: var(--accent);
 }
 
-/* ===============================
-   HAMBURGER
-================================ */
-.hamburger {
+   /*  menu HAMBURGER */
+
+   .hamburger {
   display: none;
   background: none;
   border: none;
@@ -118,10 +110,9 @@ nav ul button:hover {
   box-shadow: none;
 }
 
-/* ===============================
-   MAIN
-================================ */
-main {
+   /* MAIN */
+
+   main {
   padding: 60px 0;
 }
 
@@ -137,9 +128,8 @@ main section > h2 {
   color: var(--texte);
 }
 
-/* ===============================
-   HERO
-================================ */
+/* HERO */
+
 .hero {
   text-align: center;
   padding: 80px 0;
@@ -159,10 +149,9 @@ main section > h2 {
   margin: 0 auto 20px;
 }
 
-/* ===============================
-   BOUTONS
-================================ */
-.btn {
+   /* BOUTONS */
+
+   .btn {
   display: inline-block;
   padding: 12px 24px;
   background-color: var(--accent);
@@ -212,10 +201,9 @@ main section > h2 {
   background-color: var(--accent-fonce);
 }
 
-/* ===============================
-   GRID
-================================ */
-.grid {
+   /* GRID */
+
+   .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
@@ -226,10 +214,9 @@ main section > h2 {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-/* ===============================
-   CARDS
-================================ */
-.card {
+   /* CARDS */
+
+   .card {
   background-color: var(--blanc);
   padding: 24px;
   border-radius: 12px;
@@ -249,10 +236,9 @@ main section > h2 {
   color: var(--texte);
 }
 
-/* ===============================
-   FORMULAIRES
-================================ */
-form {
+   /* FORMULAIRES */
+
+   form {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -365,10 +351,9 @@ label {
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-/* ===============================
-   FIELDSET
-================================ */
-fieldset {
+   /* FIELDSET */
+
+   fieldset {
   border: 1px solid var(--bordure);
   border-radius: 12px;
   padding: 20px;
@@ -385,10 +370,9 @@ legend {
   font-weight: 700;
 }
 
-/* ===============================
-   SCORE BLOCK
-================================ */
-.score-block {
+   /* SCORE BLOCK */
+
+   .score-block {
   background-color: var(--blanc);
   border-radius: 16px;
   padding: 40px;
@@ -442,10 +426,9 @@ legend {
 .score-green-bg { background-color: #ECFDF5; color: var(--vert); }
 .score-red-bg   { background-color: #FEF2F2; color: var(--rouge); }
 
-/* ===============================
-   SCORE GRID — HOME
-================================ */
-.score-grid {
+   /* SCORE GRID — HOME */
+
+   .score-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -494,10 +477,9 @@ legend {
 .score-red    { border-left-color: var(--rouge); }
 .score-red    strong, .score-red    span { color: var(--rouge); }
 
-/* ===============================
-   CARD VALUES
-================================ */
-.card-value {
+   /* CARD VALUES */
+
+   .card-value {
   font-family: 'DM Mono', monospace;
   font-size: 1.8rem;
   font-weight: 700;
@@ -510,10 +492,9 @@ legend {
   color: var(--gris);
 }
 
-/* ===============================
-   VEHICLE CARD
-================================ */
-.vehicle-card {
+   /* VEHICLE CARD */
+
+   .vehicle-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -542,10 +523,9 @@ legend {
   flex-shrink: 0;
 }
 
-/* ===============================
-   TIP CARD
-================================ */
-.tip-card {
+   /* TIP CARD */
+
+   .tip-card {
   border-left: 4px solid var(--accent);
 }
 
@@ -554,10 +534,9 @@ legend {
   line-height: 1.7;
 }
 
-/* ===============================
-   CRITERIA DETAIL
-================================ */
-.criteria-detail-list {
+   /* CRITERIA DETAIL */
+
+   .criteria-detail-list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -595,10 +574,9 @@ legend {
 .score-orange-text { color: var(--orange); }
 .score-red-text    { color: var(--rouge); }
 
-/* ===============================
-   HOME — ÉTAPES ET CRITÈRES
-================================ */
-.step-number {
+   /* HOME — ÉTAPES ET CRITÈRES */
+
+   .step-number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -632,10 +610,9 @@ legend {
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* ===============================
-   ADMIN DASHBOARD
-================================ */
-.admin-badge {
+   /* ADMIN DASHBOARD */
+
+   .admin-badge {
   background-color: var(--accent-clair);
   color: var(--accent-fonce);
   padding: 4px 12px;
@@ -685,10 +662,9 @@ legend {
 .kpi-trend.neutral { color: var(--gris); }
 .kpi-trend.down    { color: var(--rouge); }
 
-/* ===============================
-   TABLE
-================================ */
-.table-wrapper {
+   /* TABLE */
+
+   .table-wrapper {
   overflow-x: auto;
 }
 
@@ -789,10 +765,9 @@ tr:hover td {
 .badge-green  { background-color: #ECFDF5; color: var(--vert); }
 .badge-orange { background-color: #FFFBEB; color: var(--orange); }
 
-/* ===============================
-   GRAPHIQUE ACTIVITÉ
-================================ */
-.chart-bars {
+   /* GRAPHIQUE ACTIVITÉ */
+
+   .chart-bars {
   display: flex;
   align-items: flex-end;
   gap: 4px;
@@ -834,10 +809,9 @@ tr:hover td {
   text-align: center;
 }
 
-/* ===============================
-   RÉPARTITION CARBURANT
-================================ */
-.fuel-list {
+   /* RÉPARTITION CARBURANT */
+
+   .fuel-list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -902,9 +876,8 @@ tr:hover td {
   color: var(--texte-2);
 }
 
-/* ===============================
-   DISTRIBUTION SCORES
-================================ */
+   /* DISTRIBUTION SCORES */
+
 .score-bars {
   list-style: none;
   display: flex;
@@ -983,9 +956,8 @@ tr:hover td {
     color: var(--accent);
 }
 
-/* ===============================
-   RÉGIONS & MARQUES
-================================ */
+  /* RÉGIONS & MARQUES */
+
 .region-list {
   list-style: none;
   margin-top: 16px;
@@ -1014,9 +986,8 @@ tr:hover td {
   color: var(--gris);
 }
 
-/* ===============================
-   SR-ONLY
-================================ */
+   /* SR-ONLY */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1029,17 +1000,94 @@ tr:hover td {
   border: 0;
 }
 
-/* ===============================
-   FOOTER
-================================ */
+   /* FOOTER */
+
 footer {
   background-color: var(--blanc);
-  padding: 20px 0;
-  text-align: center;
-  margin-top: 200px;
-  color: var(--gris);
-  font-size: 0.875rem;
   border-top: 1px solid var(--bordure);
+  margin-top: 80px;
+}
+
+.footer-dark {
+  background-color: var(--texte);
+  padding: 60px 0;
+  text-align: center;
+}
+
+.footer-stat-number {
+  font-family: 'Fraunces', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.footer-stat-label {
+  font-size: 1rem;
+  color: var(--blanc);
+  display: block;
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+
+.footer-slogan {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blanc);
+  opacity: 0.9;
+}
+
+.footer-content {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+  padding: 60px 0 40px;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.footer-section h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 16px;
+}
+
+.footer-section p {
+  color: var(--texte-2);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-section ul li a {
+  color: var(--texte-2);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-section ul li a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  width: 90%;
+  max-width: 1100px;
+  margin: 24px auto;
+  text-align: center;
+  color: var(--gris);
+  font-size: 0.85rem;
 }
 
 /* ===============================
