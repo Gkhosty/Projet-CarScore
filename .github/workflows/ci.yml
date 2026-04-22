@@ -23,12 +23,12 @@ jobs:
 
       - name: Tester le backend
         run: |
-          cd back
+          cd Back
           pnpm install
           pnpm test
 
       - name: Tester le frontend
         run: |
-          cd front
+          cd Front
           pnpm install
           pnpm test
