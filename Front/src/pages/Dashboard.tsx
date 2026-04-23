@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { Vehicule } from "../types/index";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import API_URL from "../utils/config";
 
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
@@ -12,7 +13,7 @@ export default function Dashboard() {
     useEffect(() => {
         async function chargerVehicules() {
             // on fait une requit pour cette api pour recuperer tous les vehicules de users connecté
-            const response = await fetch('http://localhost:5000/api/vehicules', {
+            const response = await fetch(`${API_URL}/api/vehicules`, {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }
@@ -29,7 +30,7 @@ export default function Dashboard() {
             return
         }
 
-        await fetch(`http://localhost:5000/api/vehicules/${id}`,{
+        await fetch(`${API_URL}/api/vehicules/${id}`,{
             method: 'DELETE',
             headers: {
                 'authorization': 'Bearer ' + sessionStorage.getItem('token'),

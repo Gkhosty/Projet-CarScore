@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import API_URL from '../utils/config'
 
 export default function Verify() {
     const { token } = useParams()
@@ -8,7 +9,7 @@ export default function Verify() {
 
     useEffect(() => {
         async function verifierCompte() {
-            const response = await fetch(`http://localhost:5000/api/verify/${token}`)
+            const response = await fetch(`${API_URL}/api/verify/${token}`)
             const data = await response.json()
             if (data.message) {
                 setSucces(true)

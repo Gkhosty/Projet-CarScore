@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../utils/config";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -8,9 +9,8 @@ export default function Login() {
     const navigate = useNavigate();
 
     async function handleLogin(event: any) {
-        const API_URL = "car-score-mxe27h9lp-gkhostys-projects.vercel.app";
         event.preventDefault()
-        const response = await fetch('http://localhost:5000/api/login', {
+        const response = await fetch(`${API_URL}/api/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
