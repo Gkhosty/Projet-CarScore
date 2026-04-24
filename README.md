@@ -56,7 +56,7 @@ Le frontend est accessible sur → **http://localhost:5173**
 node index.js
 ```
 
-Le backend est accessible sur → **http://localhost:5000**
+Le backend est accessible sur → **http://projet-carscore.onrender.com**
 
 ---
 

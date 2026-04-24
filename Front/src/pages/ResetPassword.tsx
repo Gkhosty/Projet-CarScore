@@ -20,7 +20,7 @@ export default function ResetPassword() {
             return
         }
 
-        const response = await fetch(`http://localhost:5000/api/reset-password/${token}`, {
+        const response = await fetch(`http://projet-carscore.onrender.com/api/reset-password/${token}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ password })

@@ -20,7 +20,7 @@ export default function AddCar() {
 
     useEffect(function() {
         async function verifierNombreVehicules() {
-            const response = await fetch('http://localhost:5000/api/vehicules', {
+            const response = await fetch('http://projet-carscore.onrender.com/api/vehicules', {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }
@@ -41,7 +41,7 @@ export default function AddCar() {
 
     async function handleAddCar(event: any) {
         event.preventDefault();
-        const response = await fetch('http://localhost:5000/api/vehicules', {
+        const response = await fetch('http://projet-carscore.onrender.com/api/vehicules', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function AddCar() {
             return
         }
         if (data.message) {
-            await fetch('http://localhost:5000/api/scores', {
+            await fetch('http://projet-carscore.onrender.com/api/scores', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
