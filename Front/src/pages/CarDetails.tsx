@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import type { Score } from "../types/index";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import API_URL from "../utils/config";
 
 export default function CarDetails() {
     const [score, setScore] = useState<Score | null>(null);
@@ -11,7 +10,7 @@ export default function CarDetails() {
 
     useEffect(() => {
         async function chargerScore() {
-            const response = await fetch(`${API_URL}/api/scores/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/scores/${id}`, {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }

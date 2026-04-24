@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import type { User } from "../types/index";
 import Footer from "../components/footer";
 import Header from "../components/header";
-import API_URL from "../utils/config";
 
 export default function AdminDashboard() {
     const [stats, setStats] = useState<any>(null)
@@ -14,15 +13,15 @@ export default function AdminDashboard() {
             const token = sessionStorage.getItem('token')
             const headers = { 'authorization': 'Bearer ' + token }
 
-            const resStats = await fetch(`${API_URL}/api/admin/stats`, { headers })
+            const resStats = await fetch('http://localhost:5000/api/admin/stats', { headers })
             const dataStats = await resStats.json()
             setStats(dataStats)
 
-            const resUsers = await fetch(`${API_URL}/api/admin/users`, { headers })
+            const resUsers = await fetch('http://localhost:5000/api/admin/users', { headers })
             const dataUsers = await resUsers.json()
             setUsers(dataUsers.users || [])
 
-            const resAnalyses = await fetch(`${API_URL}/api/admin/analyses`, { headers })
+            const resAnalyses = await fetch('http://localhost:5000/api/admin/analyses', { headers })
             const dataAnalyses = await resAnalyses.json()
             setAnalyses(dataAnalyses.analyses || [])
         }
@@ -31,7 +30,7 @@ export default function AdminDashboard() {
 
     async function desactiverUser(id: number) {
         const token = sessionStorage.getItem('token')
-        await fetch(`${API_URL}/api/admin/users/${id}`, {
+        await fetch(`http://localhost:5000/api/admin/users/${id}`, {
             method: 'PUT',
             headers: { 'authorization': 'Bearer ' + token }
         })
@@ -40,7 +39,7 @@ export default function AdminDashboard() {
 
     async function supprimerUser(id: number) {
         const token = sessionStorage.getItem('token')
-        await fetch(`${API_URL}/api/admin/users/${id}`, {
+        await fetch(`http://localhost:5000/api/admin/users/${id}`, {
             method: 'DELETE',
             headers: { 'authorization': 'Bearer ' + token }
         })

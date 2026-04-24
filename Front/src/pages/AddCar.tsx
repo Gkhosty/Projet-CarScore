@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import API_URL from "../utils/config";
 export default function AddCar() {
     const [marque, setMarque] = useState('');
     const [modele, setModele] = useState('');
@@ -17,11 +16,11 @@ export default function AddCar() {
     const [entretien, setEntretien] = useState('');
     const [ct, setCt] = useState('');
     const [nombreVehicules, setNombreVehicules] = useState(0)
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     useEffect(function() {
         async function verifierNombreVehicules() {
-            const response = await fetch(`${API_URL}/api/vehicules`, {
+            const response = await fetch('http://localhost:5000/api/vehicules', {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }
@@ -42,7 +41,7 @@ export default function AddCar() {
 
     async function handleAddCar(event: any) {
         event.preventDefault();
-        const response = await fetch(`${API_URL}/api/vehicules`, {
+        const response = await fetch('http://localhost:5000/api/vehicules', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +55,7 @@ export default function AddCar() {
             return
         }
         if (data.message) {
-            await fetch(`${API_URL}/api/scores`, {
+            await fetch('http://localhost:5000/api/scores', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +76,7 @@ export default function AddCar() {
         setModeles(nomsModeles)
     }
 
-    if ( nombreVehicules >=5){
+    if ( nombreVehicules >=6){
         return (<>
         <Header type= "user" />
         <main className="container">
