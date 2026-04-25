@@ -10,7 +10,7 @@ export default function CarDetails() {
 
     useEffect(() => {
         async function chargerScore() {
-            const response = await fetch(`http://projet-carscore.onrender.com/api/scores/${id}`, {
+            const response = await fetch(`https://projet-carscore.onrender.com/api/scores/${id}`, {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }

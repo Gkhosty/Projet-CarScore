@@ -12,7 +12,7 @@ export default function Dashboard() {
     useEffect(() => {
         async function chargerVehicules() {
             // on fait une requit pour cette api pour recuperer tous les vehicules de users connecté
-            const response = await fetch('http://projet-carscore.onrender.com/api/vehicules', {
+            const response = await fetch('https://projet-carscore.onrender.com/api/vehicules', {
                 headers: {
                     'authorization': 'Bearer ' + sessionStorage.getItem('token')
                 }
@@ -29,7 +29,7 @@ export default function Dashboard() {
             return
         }
 
-        await fetch(`http://projet-carscore.onrender.com/api/vehicules/${id}`,{
+        await fetch(`https://projet-carscore.onrender.com/api/vehicules/${id}`,{
             method: 'DELETE',
             headers: {
                 'authorization': 'Bearer ' + sessionStorage.getItem('token'),

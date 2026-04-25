@@ -8,7 +8,7 @@ export default function Verify() {
 
     useEffect(() => {
         async function verifierCompte() {
-            const response = await fetch(`http://projet-carscore.onrender.com/api/verify/${token}`)
+            const response = await fetch(`https://projet-carscore.onrender.com/api/verify/${token}`)
             const data = await response.json()
             if (data.message) {
                 setSucces(true)
