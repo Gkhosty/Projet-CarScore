@@ -15,7 +15,7 @@ const app = express();
 
 // On autorise les requêtes venant du frontend
 app.use(cors({
-    origin: 'https://projet-car-score.vercel.app'
+    origin: 'https://car-score-alpha.vercel.app'
 }));
 
 // On dit à Express de lire et comprendre le JSON
