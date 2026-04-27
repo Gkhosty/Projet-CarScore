@@ -3,13 +3,21 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const calculerScore = require('../utils/scoring');
-const verifierToken = require('../middleware/auth')
+const verifierToken = require('../middleware/auth');
+const { scoreShema } = require('../utils/validators');
 
 router.post('/scores', verifierToken, async (req, res) =>{
     const { vehicule_id } = req.body;
+    // validation zod 
+    const result = scoreShema.safeParse({
+        vehicule_id: parseInt(vehicule_id)
+    });
+    if(!result.success){
+        return res.status(400).json({ erreur: result.error.errors[0].message });
+    }
     const id = parseInt(vehicule_id);
-    const result = await sql`SELECT * FROM vehicules WHERE id = ${id}`;
-    const vehicule = result[0];
+    const vehiculeResult = await sql`SELECT * FROM vehicules WHERE id = ${id}`;
+    const vehicule = vehiculeResult[0];
     if(!vehicule){
         return res.status(404).json({ erreur: 'Vehicule introuvable'});
     };

@@ -3,9 +3,24 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const verifierToken = require('../middleware/auth');
+const { vehiculeSchema } = require('../utils/validators');
 
 router.post('/vehicules', verifierToken, async (req, res) => {
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
+    // Validation Zod pour le formulaire
+    const result = vehiculeSchema.safeParse({
+        marque,
+        modele,
+        annee: parseInt(annee),
+        kilometrage: parseInt(kilometrage),
+        carburant,
+        region,
+        entretien,
+        ct
+    })
+    if(!result.success){
+        return res.status(400).json({ erreur: result.error.errors[0].message });
+    }
     // ke middleware verifiertoken a deja decodé le token
     const user_id = req.user.id;
     //  On Verifie le nombre de vehicule avant d'ajouter

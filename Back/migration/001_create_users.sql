@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) DEFAULT 'user',
     verifie BOOLEAN DEFAULT false,
+    token_verification VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
 );

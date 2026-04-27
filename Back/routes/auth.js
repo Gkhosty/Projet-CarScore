@@ -5,6 +5,7 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const { envoyerEmailValidation, envoyerEmailReset } = require('../utils/email');
 const crypto = require('crypto');
+const { registerSchema, loginSchema } = require('../utils/validators');
 const router = express.Router();
 
 // Stockage temporaire en mémoire — PAS dans Neon !
@@ -14,27 +15,23 @@ const tokensReset = {};
 router.post('/register', async (req, res) => {
     const { nom, email, password } = req.body;
 
-    // verification pour que tous les champs sont remplis
-    if (!nom || !email || !password) {
-        return res.status(400).json({ erreur: 'Tous les champs sont obligatoires !'});
-    }
-
-    // verifie que le mdp fait au moins 12 caracteres
-    if (password.length < 12){
-        return res.status(400).json({ erreur: 'Le mot de passe doit contenir au moins 12 caractéres !'})
-    }
+    // validation des champs avec method Zod
+    const result = registerSchema.safeParse(req.body);
+    if (!result.success) {
+        return res.status(400).json({ erreur: result.error.errors[0].message });
+    };
 
     // Vérifier si l'email existe déjà dans Neon
     const existant = await sql`SELECT * FROM users WHERE email = ${email}`;
     if (existant.length > 0) {
         return res.status(400).json({ erreur: 'Cet email est déjà utilisé !' });
-    }
+    };
 
     // Vérifier si email déjà en attente de validation
     const enAttente = Object.values(comptesEnAttente).find(c => c.email === email);
     if (enAttente) {
         return res.status(400).json({ erreur: 'Un email de validation a déjà été envoyé !' });
-    }
+    };
 
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -54,12 +51,14 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     
-    if (!email || !password) {
-        return res.status(400).json({ erreur: 'Email et mot de passe obligatoires !'});
-    }
+    // validation des champs avec zod
+    const result = loginSchema.safeParse(req.body);
+    if(!result.success){
+        return res.status(400).json({ erreur: result.error.errors[0].message});
+    };
 
-    const result = await sql`SELECT * FROM users WHERE email = ${email}`;
-    const user = result[0];
+    const utilisateur = await sql`SELECT * FROM users WHERE email = ${email}`;
+    const user = utilisateur[0];
 
     // 1. Vérifier si l'utilisateur existe
     if (!user) {
