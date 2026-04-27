@@ -24,11 +24,11 @@ jobs:
       - name: Tester le backend
         run: |
           cd Back
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm test
 
       - name: Tester le frontend
         run: |
           cd Front
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm test
