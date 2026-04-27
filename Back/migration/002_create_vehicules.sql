@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS vehicules (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    marque VARCHAR(100) NOT NULL,
+    modele VARCHAR(100) NOT NULL,
+    annee INTEGER NOT NULL,
+    kilometrage INTEGER NOT NULL,
+    carburant VARCHAR(50) NOT NULL,
+    region VARCHAR(50) NOT NULL,
+    entretien VARCHAR(50) NOT NULL,
+    ct VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);

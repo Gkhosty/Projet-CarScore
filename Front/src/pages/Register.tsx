@@ -75,7 +75,7 @@ export default function Register() {
                             <input
                                 type="password"
                                 id="password"
-                                placeholder="Minimum 8 caractères"
+                                placeholder="Minimum 12 caractères"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
                                 required
