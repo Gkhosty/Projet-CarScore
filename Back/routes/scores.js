@@ -8,12 +8,12 @@ const { scoreShema } = require('../utils/validators');
 
 router.post('/scores', verifierToken, async (req, res) =>{
     const { vehicule_id } = req.body;
-    // validation zod 
+    // validation z 
     const result = scoreShema.safeParse({
         vehicule_id: parseInt(vehicule_id)
     });
     if(!result.success){
-        return res.status(400).json({ erreur: result.error.errors[0].message });
+        return res.status(400).json({ erreur: result.error.issues[0].message });
     }
     const id = parseInt(vehicule_id);
     const vehiculeResult = await sql`SELECT * FROM vehicules WHERE id = ${id}`;

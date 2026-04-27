@@ -7,7 +7,7 @@ const { vehiculeSchema } = require('../utils/validators');
 
 router.post('/vehicules', verifierToken, async (req, res) => {
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
-    // Validation Zod pour le formulaire
+    // Validation z pour le formulaire
     const result = vehiculeSchema.safeParse({
         marque,
         modele,
@@ -19,7 +19,7 @@ router.post('/vehicules', verifierToken, async (req, res) => {
         ct
     })
     if(!result.success){
-        return res.status(400).json({ erreur: result.error.errors[0].message });
+        return res.status(400).json({ erreur: result.error.issues[0].message });
     }
     // ke middleware verifiertoken a deja decodé le token
     const user_id = req.user.id;

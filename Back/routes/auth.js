@@ -15,10 +15,10 @@ const tokensReset = {};
 router.post('/register', async (req, res) => {
     const { nom, email, password } = req.body;
 
-    // validation des champs avec method Zod
+    // validation des champs avec method z
     const result = registerSchema.safeParse(req.body);
     if (!result.success) {
-        return res.status(400).json({ erreur: result.error.errors[0].message });
+        return res.status(400).json({ erreur: result.error.issues[0].message });
     };
 
     // Vérifier si l'email existe déjà dans Neon
@@ -51,10 +51,10 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     
-    // validation des champs avec zod
+    // validation des champs avec z
     const result = loginSchema.safeParse(req.body);
     if(!result.success){
-        return res.status(400).json({ erreur: result.error.errors[0].message});
+        return res.status(400).json({ erreur: result.error.issues[0].message});
     };
 
     const utilisateur = await sql`SELECT * FROM users WHERE email = ${email}`;
