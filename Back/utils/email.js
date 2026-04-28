@@ -37,7 +37,7 @@ async function envoyerEmailValidation(email, token) {
 
 // Fonction pour envoyer l'email de réinitialisation
 async function envoyerEmailReset(email, token) {
-    const lien = `http://localhost:5173/reset-password/${token}`;
+    const lien = `https://car-score-alpha.vercel.app/reset-password/${token}`;
 
     await transporter.sendMail({
         from: `"CarScore AI" <${process.env.EMAIL_USER}>`,
