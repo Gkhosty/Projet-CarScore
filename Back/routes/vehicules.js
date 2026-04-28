@@ -4,8 +4,10 @@ const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const verifierToken = require('../middleware/auth');
 const { vehiculeSchema } = require('../utils/validators');
+const asyncHandler = require('../utils/handler');
 
-router.post('/vehicules', verifierToken, async (req, res) => {
+router.post('/vehicules', verifierToken, asyncHandler(async(req, res) => {
+    
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
     // Validation z pour le formulaire
     const result = vehiculeSchema.safeParse({
@@ -34,9 +36,9 @@ router.post('/vehicules', verifierToken, async (req, res) => {
     const ajouterVehicule = await sql`INSERT INTO vehicules ( user_id, marque, modele, annee, kilometrage, carburant, region, entretien, ct ) 
     VALUES (${user_id},${marque}, ${modele}, ${annee}, ${kilometrage}, ${carburant}, ${region}, ${entretien}, ${ct}) RETURNING *`;
     res.json({ message: 'Vehicule ajoute avec succes ✅', vehicule: ajouterVehicule[0]});
-});
+}));
 
-router.get('/vehicules', verifierToken, async (req, res) => {
+router.get('/vehicules', verifierToken, asyncHandler(async(req, res) => {
 
     const user_id = req.user.id;
 
@@ -47,14 +49,15 @@ router.get('/vehicules', verifierToken, async (req, res) => {
         WHERE vehicules.user_id = ${user_id}
     `;
     res.json(vehicules);
-})
+}));
 
-router.delete('/vehicules/:id', verifierToken, async (req, res) => {
+router.delete('/vehicules/:id', verifierToken, asyncHandler(async(req, res) => {
     const id = parseInt(req.params.id);
     const result = await sql`DELETE FROM vehicules WHERE id = ${id}`;
     res.json(result);
 
-})
+
+}));
 
 
 module.exports = router

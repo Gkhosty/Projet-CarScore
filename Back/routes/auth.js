@@ -6,13 +6,14 @@ const sql = neon(process.env.DATABASE_URL);
 const { envoyerEmailValidation, envoyerEmailReset } = require('../utils/email');
 const crypto = require('crypto');
 const { registerSchema, loginSchema } = require('../utils/validators');
+const asyncHandler  = require('../utils/handler');
 const router = express.Router();
 
 // Stockage temporaire en mémoire — PAS dans Neon !
 const comptesEnAttente = {};
 const tokensReset = {};
 
-router.post('/register', async (req, res) => {
+router.post('/register', asyncHandler(async(req, res) => {
     const { nom, email, password } = req.body;
 
     // validation des champs avec method z
@@ -46,9 +47,9 @@ router.post('/register', async (req, res) => {
     await envoyerEmailValidation(email, token);
 
     res.json({ message: 'Vérifiez votre email pour activer votre compte 📧' });
-});
+}));
 
-router.post('/login', async (req, res) => {
+router.post('/login', asyncHandler(async(req, res) => {
     const { email, password } = req.body;
     
     // validation des champs avec z
@@ -86,9 +87,9 @@ router.post('/login', async (req, res) => {
     );
 
     res.json({ token });
-});
+}));
 
-router.get('/verify/:token', async (req, res) => {
+router.get('/verify/:token', asyncHandler(async(req, res) => {
     const { token } = req.params;
 
     // On cherche les données en mémoire
@@ -109,9 +110,9 @@ router.get('/verify/:token', async (req, res) => {
     delete comptesEnAttente[token];
 
     res.json({ message: 'Compte validé avec succès ! Vous pouvez vous connecter ✅' });
-});
+}));
 
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', asyncHandler(async(req, res) => {
     const { email } = req.body;
     if (!email) {
         return res.status(400).json({ erreur: 'Email obligatoire !'});
@@ -138,9 +139,9 @@ router.post('/forgot-password', async (req, res) => {
     await envoyerEmailReset(email, token);
 
     res.json({ message: 'Email de réinitialisation envoyé ! Vérifiez votre boîte mail 📧' });
-});
+}));
 
-router.post('/reset-password/:token', async (req, res) => {
+router.post('/reset-password/:token', asyncHandler(async(req, res) => {
     const { token } = req.params;
     const { password } = req.body;
     if (!password){
@@ -178,6 +179,6 @@ router.post('/reset-password/:token', async (req, res) => {
     delete tokensReset[token];
 
     res.json({ message: 'Mot de passe modifié avec succès ! Connectez-vous ✅' });
-});
+}));
 
 module.exports = router;

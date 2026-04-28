@@ -9,6 +9,7 @@ const authRouter = require('./routes/auth');
 const vehiculesRouter = require('./routes/vehicules')
 const scoresRouter = require('./routes/scores')
 const adminRouter = require('./routes/admin');
+const { middlewareErreurs } = require('./utils/handler');
 
 // On crée notre application Express
 const app = express();
@@ -33,6 +34,8 @@ app.use('/api', adminRouter);
 app.get('/', (req, res) => {
     res.json({message: 'CarScore API fonctionne'});
 });
+// Middleware gestion d'erreurs centralisé
+app.use(middlewareErreurs)
 
 app.listen(PORT, () =>{
     console.log(`Serveur CarScore démarré sur http://localhost:${PORT}`);

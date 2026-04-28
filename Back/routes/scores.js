@@ -5,8 +5,9 @@ const router = express.Router();
 const calculerScore = require('../utils/scoring');
 const verifierToken = require('../middleware/auth');
 const { scoreShema } = require('../utils/validators');
+const asyncHandler  = require('../utils/handler');
 
-router.post('/scores', verifierToken, async (req, res) =>{
+router.post('/scores', verifierToken, asyncHandler(async(req, res) =>{
     const { vehicule_id } = req.body;
     // validation z 
     const result = scoreShema.safeParse({
@@ -27,10 +28,10 @@ router.post('/scores', verifierToken, async (req, res) =>{
     VALUES 
     (${id}, ${score.scoreGlobal}, ${score.scoreKilometrage}, ${score.scoreAnnee}, ${score.scoreCarburant}, ${score.scoreRegion}, ${score.scoreEntretien}, ${score.scoreCT}, ${score.scoreCTBonus}, ${score.recommandation}, ${score.coutMensuel}, ${score.depreciation}, ${score.perteAnnuelle}, 'Mars - Juin')`;
     res.json({ score });
-})
+}))
 
 
-router.get('/scores/:vehicule_id', verifierToken, async (req, res) =>{
+router.get('/scores/:vehicule_id', verifierToken, asyncHandler(async(req, res) =>{
     const vehicule_id = parseInt(req.params.vehicule_id);
     const result = await sql`SELECT * FROM scores WHERE vehicule_id = ${vehicule_id}`;
     const score = result[0];
@@ -38,6 +39,6 @@ router.get('/scores/:vehicule_id', verifierToken, async (req, res) =>{
         return res.status(404).json({ erreur: 'Score introuvable' });
     }
     res.json({ score });
-})
+}));
 
 module.exports = router;
