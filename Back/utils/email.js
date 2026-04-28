@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 // Fonction pour envoyer l'email de validation
 async function envoyerEmailValidation(email, token) {
-    const lien = `http://localhost:5173/verify/${token}`;
+    const lien = `https://car-score-alpha.vercel.app/verify/${token}`;
 
     await transporter.sendMail({
         from: `"CarScore " <${process.env.EMAIL_USER}>`,
