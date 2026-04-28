@@ -4,7 +4,7 @@ const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const verifierToken = require('../middleware/auth');
 const { vehiculeSchema } = require('../utils/validators');
-const asyncHandler = require('../utils/handler');
+const { asyncHandler } = require('../utils/handler');
 
 router.post('/vehicules', verifierToken, asyncHandler(async(req, res) => {
     

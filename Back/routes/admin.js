@@ -3,7 +3,7 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const verifierToken = require('../middleware/auth');
-const asyncHandler = require('../utils/handler');
+const { asyncHandler } = require('../utils/handler');
 
 router.get('/admin/stats', verifierToken, asyncHandler(async(req, res) => {
     const totalUsers = await sql`SELECT COUNT(*) FROM users`;

@@ -5,7 +5,7 @@ const router = express.Router();
 const calculerScore = require('../utils/scoring');
 const verifierToken = require('../middleware/auth');
 const { scoreShema } = require('../utils/validators');
-const asyncHandler  = require('../utils/handler');
+const { asyncHandler }  = require('../utils/handler');
 
 router.post('/scores', verifierToken, asyncHandler(async(req, res) =>{
     const { vehicule_id } = req.body;

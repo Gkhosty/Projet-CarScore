@@ -6,7 +6,7 @@ const sql = neon(process.env.DATABASE_URL);
 const { envoyerEmailValidation, envoyerEmailReset } = require('../utils/email');
 const crypto = require('crypto');
 const { registerSchema, loginSchema } = require('../utils/validators');
-const asyncHandler  = require('../utils/handler');
+const { asyncHandler }  = require('../utils/handler');
 const router = express.Router();
 
 // Stockage temporaire en mémoire — PAS dans Neon !
