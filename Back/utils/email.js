@@ -1,15 +1,17 @@
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
+const SibApiV3Sdk = require('sib-api-v3-sdk');
+const client = SibApiV3Sdk.ApiClient.instance;
+client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // Fonction pour envoyer l'email de validation
 async function envoyerEmailValidation(email, token) {
     const lien = `https://car-score-alpha.vercel.app/verify/${token}`;
 
-    await resend.emails.send({
-        from: 'CarScore <onboarding@resend.dev>',
-        to: email,
+    await apiInstance.sendTransacEmail({
+        sender: { name: 'CarScore', email: 'kgovip007@gmail.com' },
+        to: [{ email }],
         subject: '✅ Validez votre compte CarScore',
-        html: `
+        htmlContent: `
             <h2>Bienvenue sur CarScore ! 🚗</h2>
             <p>Cliquez sur le lien ci-dessous pour valider votre compte :</p>
             <a href="${lien}" style="
@@ -31,11 +33,11 @@ async function envoyerEmailValidation(email, token) {
 async function envoyerEmailReset(email, token) {
     const lien = `https://car-score-alpha.vercel.app/reset-password/${token}`;
 
-    await resend.emails.send({
-        from: 'CarScore <onboarding@resend.dev>',
-        to: email,
+    await apiInstance.sendTransacEmail({
+        sender: { name: 'CarScore', email: 'kgovip007@gmail.com' },
+        to: [{ email }],
         subject: '🔐 Réinitialisation de votre mot de passe CarScore',
-        html: `
+        htmlContent: `
             <h2>Réinitialisation de mot de passe 🔐</h2>
             <p>Vous avez demandé à réinitialiser votre mot de passe.</p>
             <p>Cliquez sur le lien ci-dessous :</p>
