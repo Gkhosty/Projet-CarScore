@@ -25,11 +25,13 @@ export default function Register() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nom, email, password })
         })
+        console.log('status:', response.status)
         const data = await response.json()
+        console.log('Response complete:', data)
         if (data.message) {
             navigate('/login')
         } else {
-            setErreur(data.erreur)
+            setErreur(data.erreur || JSON.stringify(data))
         }
     }
 

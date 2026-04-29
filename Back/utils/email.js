@@ -1,20 +1,12 @@
-const nodemailer = require('nodemailer');
-
-// On configure le transporteur Gmail
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Fonction pour envoyer l'email de validation
 async function envoyerEmailValidation(email, token) {
     const lien = `https://car-score-alpha.vercel.app/verify/${token}`;
 
-    await transporter.sendMail({
-        from: `"CarScore " <${process.env.EMAIL_USER}>`,
+    await resend.emails.send({
+        from: 'CarScore <onboarding@resend.dev>',
         to: email,
         subject: '✅ Validez votre compte CarScore',
         html: `
@@ -30,7 +22,7 @@ async function envoyerEmailValidation(email, token) {
             ">
                 Valider mon compte
             </a>
-            <p>Ce lien expire dans 24h.</p>
+            <p>Ce lien expire dans 1h.</p>
         `
     });
 }
@@ -39,8 +31,8 @@ async function envoyerEmailValidation(email, token) {
 async function envoyerEmailReset(email, token) {
     const lien = `https://car-score-alpha.vercel.app/reset-password/${token}`;
 
-    await transporter.sendMail({
-        from: `"CarScore AI" <${process.env.EMAIL_USER}>`,
+    await resend.emails.send({
+        from: 'CarScore <onboarding@resend.dev>',
         to: email,
         subject: '🔐 Réinitialisation de votre mot de passe CarScore',
         html: `
@@ -64,5 +56,3 @@ async function envoyerEmailReset(email, token) {
 }
 
 module.exports = { envoyerEmailValidation, envoyerEmailReset };
-
-
