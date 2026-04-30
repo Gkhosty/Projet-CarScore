@@ -8,7 +8,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v3
@@ -16,7 +15,7 @@ jobs:
       - name: Installer Node.js
         uses: actions/setup-node@v3
         with:
-            node-version: lts/*
+          node-version: lts/*
 
       - name: Installer pnpm
         run: npm install -g pnpm
@@ -32,3 +31,10 @@ jobs:
           cd Front
           pnpm install --no-frozen-lockfile
           pnpm test
+
+  deploy:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déployer sur Render
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
