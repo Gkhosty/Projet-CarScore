@@ -7,6 +7,7 @@ const { envoyerEmailValidation, envoyerEmailReset } = require('../utils/email');
 const crypto = require('crypto');
 const { registerSchema, loginSchema } = require('../utils/validators');
 const { asyncHandler }  = require('../utils/handler');
+const { lstat } = require('fs');
 const router = express.Router();
 
 // Stockage temporaire en mémoire — PAS dans Neon !
@@ -81,7 +82,7 @@ router.post('/login', asyncHandler(async(req, res) => {
 
     // 4. Générer le token JWT
     const token = jwt.sign(
-        { id: user.id, role: user.role, nom: user.nom },
+        { id: user.id, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
     );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
+import { registerSchema } from "../utils/validators.ts";
 
 export default function Register() {
     const [nom, setNom] = useState('');
@@ -15,9 +16,10 @@ export default function Register() {
     async function handleRegister(event: any) {
         event.preventDefault()
 
-        // Vérification que les mots de passe correspondent
-        if (password !== confirmPassword) {
-            setErreur('Les mots de passe ne correspondent pas ❌')
+        // validation Zod
+        const result = registerSchema.safeParse({ nom, email, password, confirmPassword })
+        if(!result.success){
+            setErreur(result.error.issues[0].message)
             return
         }
 

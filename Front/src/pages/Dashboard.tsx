@@ -7,8 +7,7 @@ import Header from "../components/header";
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
     const navigate = useNavigate();
-    const token = sessionStorage.getItem('token');
-    const nom = token ? JSON.parse(atob(token.split('.')[1])).nom : '';
+
     // useEff se declanche une seule fois au chargement de la page ,
 
     useEffect(() => {
@@ -52,9 +51,7 @@ export default function Dashboard() {
             <Header type="user" />
 
             <main className="container">
-                <section>
-                    <h2>Bienvenue, {nom} 👋</h2>
-                </section>
+               
                 {/* LISTE DES VEHICULES */}
                 {vehicules.map((vehicule: any) => (
                     <div key={vehicule.id}>
