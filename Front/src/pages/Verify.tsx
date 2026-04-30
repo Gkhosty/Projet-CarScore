@@ -23,7 +23,7 @@ export default function Verify() {
         <div style={{ textAlign: 'center', padding: '100px 20px' }}>
             {succes === null && <p>Vérification en cours...</p>}
 
-            {succes === false && (
+            {succes === true && (
                 <div>
                     <h2>✅ Compte validé !</h2>
                     <p>Votre email a été vérifié. Vous pouvez vous connecter.</p>
@@ -31,7 +31,7 @@ export default function Verify() {
                 </div>
             )}
 
-            {succes === true && (
+            {succes === false && (
                 <div>
                     <h2>❌ Lien invalide !</h2>
                     <p>Ce lien est invalide ou déjà utilisé.</p>
