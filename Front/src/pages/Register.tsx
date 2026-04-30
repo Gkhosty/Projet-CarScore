@@ -10,6 +10,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [erreur, setErreur] = useState('');
     const navigate = useNavigate();
+    const [succes, setSucces] = useState(false);
 
     async function handleRegister(event: any) {
         event.preventDefault()
@@ -25,13 +26,12 @@ export default function Register() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nom, email, password })
         })
-        console.log('status:', response.status)
         const data = await response.json()
-        console.log('Response complete:', data)
         if (data.message) {
-            navigate('/login')
+            setSucces(true)
+           setTimeout(() => navigate('/login'), 4000)
         } else {
-            setErreur(data.erreur || JSON.stringify(data))
+            setErreur(data.erreur)
         }
     }
 
@@ -98,9 +98,14 @@ export default function Register() {
                             />
                         </div>
 
-                        {erreur && <p className="erreur">{erreur}</p>}
-
-                        <button type="submit" className="btn-full">Créer mon compte</button>
+                       {erreur && <p className="erreur">{erreur}</p>}
+                       {succes && (
+                        <div className="succes">
+                            <p>📧 Vérifiez votre boîte mail pour activer votre compte !</p>
+                            <p>Redirection en cours...</p>
+                        </div>
+                       )}
+                       {!succes && <button type="submit" className="btn-full">Créer mon compte</button>}
 
                     </form>
 
