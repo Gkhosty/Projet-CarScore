@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginSchema } from "../utils/validators";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -9,6 +10,12 @@ export default function Login() {
 
     async function handleLogin(event: any) {
         event.preventDefault()
+        // validation Zod
+        const result = loginSchema.safeParse({ email, password })
+        if (!result.success){
+            setErreur(result.error.issues[0].message)
+            return
+        }
         const response = await fetch('https://projet-carscore.onrender.com/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

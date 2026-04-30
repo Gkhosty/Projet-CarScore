@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import { vehiculeSchema } from "../utils/validators.ts";
 export default function AddCar() {
     const [marque, setMarque] = useState('');
     const [modele, setModele] = useState('');
@@ -17,6 +18,7 @@ export default function AddCar() {
     const [ct, setCt] = useState('');
     const [nombreVehicules, setNombreVehicules] = useState(0)
     const navigate = useNavigate(); 
+    const [erreur, setErreur] = useState('');
 
     useEffect(function() {
         async function verifierNombreVehicules() {
@@ -27,7 +29,7 @@ export default function AddCar() {
             });
             const data = await response.json()
             setNombreVehicules(data.length)
-
+            
             // charger les marques et modeles depuis une api
             const responseMarques = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
             const dataMarques = await responseMarques.json();
@@ -38,9 +40,24 @@ export default function AddCar() {
         }
         verifierNombreVehicules()
     }, []);
-
+    
     async function handleAddCar(event: any) {
+        // validation Zod pour les les input
         event.preventDefault();
+        const result = vehiculeSchema.safeParse({
+            marque,
+            modele,
+            annee: parseInt(annee),
+            kilometrage: parseInt(kilometrage),
+            carburant,
+            region,
+            entretien,
+            ct
+        })
+        if (!result.success){
+            setErreur(result.error.issues[0].message)
+            return
+        }
         const response = await fetch('https://projet-carscore.onrender.com/api/vehicules', {
             method: 'POST',
             headers: {
@@ -266,7 +283,7 @@ export default function AddCar() {
                             </div>
 
                         </fieldset>
-
+                        {erreur && <p className="erreur">{erreur}</p>}
                         <button type="submit" className="btn-full">Calculer mon score</button>
 
                     </form>
