@@ -25,6 +25,7 @@ export default function Login() {
         if (data.token) {
             sessionStorage.setItem('token', data.token)
             const decoded = JSON.parse(atob(data.token.split('.')[1]))
+            sessionStorage.setItem('nom', decoded.nom)
             if (decoded.role === 'admin') {
                 navigate('/admin')
             } else {

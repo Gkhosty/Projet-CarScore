@@ -6,6 +6,8 @@ import Header from "../components/header";
 
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
+    const [afficherBienvenu, setAfficherBienvenu] = useState(true);
+    const nom = sessionStorage.getItem('nom');
     const navigate = useNavigate();
 
     // useEff se declanche une seule fois au chargement de la page ,
@@ -22,6 +24,11 @@ export default function Dashboard() {
             setVehicules(data)
         }
         chargerVehicules()
+        // TImer bienvenu 3 secodes 
+        const timer = setTimeout(function() {
+            setAfficherBienvenu(false)
+        }, 4000)
+        return function(){clearTimeout(timer)}
     }, [])
      // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
     async function supprimerVehicule(id: number) {
@@ -51,6 +58,12 @@ export default function Dashboard() {
             <Header type="user" />
 
             <main className="container">
+                {/* message bienvenu pour utlisatuer */}
+                {afficherBienvenu && (
+                    <div className="bienvenu">
+                        Bienvenu {nom} ! 👋
+                    </div>
+                )}
                
                 {/* LISTE DES VEHICULES */}
                 {vehicules.map((vehicule: any) => (

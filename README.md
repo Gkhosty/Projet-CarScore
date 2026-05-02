@@ -26,6 +26,7 @@ CarScore ambitionne de devenir le **"Credit Score de la voiture"** : un score un
 | Frontend | React, TypeScript, CSS3 |
 | Backend | Node.js + Express |
 | Base de données | Neon (PostgreSQL) |
+| Validation | Zod (backend + frontend) |
 | API externe | NHTSA (autocomplétion marque et modèle) |
 | Versioning | Git / GitHub |
 | Déploiement | Vercel (frontend) + Render (backend) |
@@ -94,6 +95,16 @@ node index.js
 
 Le backend est accessible sur → **http://localhost:5000**
 
+### 7. Migrations — Créer les tables dans Neon
+
+Exécute les fichiers SQL dans cet ordre dans Neon :
+
+```
+Back/migrations/001_create_users.sql
+Back/migrations/002_create_vehicules.sql
+Back/migrations/003_create_scores.sql
+```
+
 ---
 
 ## 📁 Structure du projet
@@ -103,54 +114,64 @@ Projet-CarScore/
 │
 ├── .github/
 │   └── workflows/
-│       └── ci.yml              → CI GitHub Actions (tests automatiques)
+│       └── ci.yml                  → CI/CD GitHub Actions
 │
-├── Front/                      → Frontend React + TypeScript + Vite
+├── Front/                          → Frontend React + TypeScript + Vite
 │   ├── public/
+│   ├── vercel.json                 → Configuration React Router pour Vercel
 │   ├── index.html
 │   ├── vite.config.ts
 │   └── src/
-│       ├── App.tsx             → Composant principal + routing
-│       ├── main.tsx            → Point d'entrée React
-│       ├── index.css           → Styles globaux + charte graphique
+│       ├── App.tsx                 → Composant principal + routing
+│       ├── main.tsx                → Point d'entrée React
+│       ├── index.css               → Styles globaux + charte graphique
 │       ├── pages/
-│       │   ├── Home.tsx        → Page d'accueil
-│       │   ├── Register.tsx    → Inscription
-│       │   ├── Login.tsx       → Connexion
-│       │   ├── Dashboard.tsx   → Tableau de bord
-│       │   ├── AddCar.tsx      → Ajouter un véhicule (autocomplétion NHTSA)
-│       │   ├── CarDetails.tsx  → Détails et score du véhicule
-│       │   └── AdminDashboard.tsx → Tableau de bord admin
+│       │   ├── Home.tsx            → Page d'accueil
+│       │   ├── Register.tsx        → Inscription
+│       │   ├── Login.tsx           → Connexion
+│       │   ├── Dashboard.tsx       → Tableau de bord
+│       │   ├── AddCar.tsx          → Ajouter un véhicule (autocomplétion NHTSA)
+│       │   ├── CarDetails.tsx      → Détails et score du véhicule
+│       │   ├── ForgotPassword.tsx  → Mot de passe oublié
+│       │   ├── ResetPassword.tsx   → Réinitialisation mot de passe
+│       │   ├── Verify.tsx          → Validation email
+│       │   └── AdminDashboard.tsx  → Tableau de bord admin
 │       ├── components/
-│       │   ├── Header.tsx      → Navigation avec menu hamburger mobile
-│       │   ├── Footer.tsx      → Pied de page avec sources et réseaux sociaux
-│       │   ├── ScoreCard.tsx   → Carte score véhicule
-│       │   ├── ScoreBar.tsx    → Barre de progression critères
-│       │   └── ProtectedRoute.tsx → Protection des routes privées
+│       │   ├── Header.tsx          → Navigation avec menu hamburger mobile
+│       │   ├── Footer.tsx          → Pied de page avec sources et réseaux sociaux
+│       │   ├── ScoreCard.tsx       → Carte score véhicule
+│       │   ├── ScoreBar.tsx        → Barre de progression critères
+│       │   └── ProtectedRoute.tsx  → Protection des routes privées
 │       ├── utils/
-│       │   └── scoring.ts      → Algorithme de scoring (frontend)
+│       │   ├── scoring.ts          → Algorithme de scoring (frontend)
+│       │   └── validators.ts       → Schémas de validation Zod (frontend)
 │       ├── tests/
-│       │   └── scoring.test.ts → Tests Vitest
+│       │   └── scoring.test.ts     → Tests Vitest
 │       └── types/
-│           └── index.ts        → Types TypeScript
+│           └── index.ts            → Types TypeScript
 │
-└── Back/                       → Backend Node.js + Express
-    ├── index.js                → Serveur Express
-    ├── .env                    → Variables d'environnement (non versionné)
+└── Back/                           → Backend Node.js + Express
+    ├── index.js                    → Serveur Express + middleware erreurs
+    ├── .env                        → Variables d'environnement (non versionné)
     ├── .gitignore
+    ├── migrations/
+    │   ├── 001_create_users.sql    → Création table users
+    │   ├── 002_create_vehicules.sql → Création table vehicules
+    │   └── 003_create_scores.sql   → Création table scores
     ├── routes/
-    │   ├── auth.js             → POST /register, POST /login
-    │   ├── vehicules.js        → GET, POST, DELETE /vehicules
-    │   ├── scores.js           → GET, POST /scores
-    │   └── admin.js            → Routes administration
+    │   ├── auth.js                 → POST /register, POST /login, GET /verify
+    │   ├── vehicules.js            → GET, POST, DELETE /vehicules
+    │   ├── scores.js               → GET, POST /scores
+    │   └── admin.js                → Routes administration
     ├── middleware/
-    │   └── auth.js             → Vérification token JWT
+    │   └── auth.js                 → Vérification token JWT
     ├── utils/
-    │   └── scoring.js          → Algorithme de scoring (backend)
-    ├── tests/
-    │   └── scoring.test.js     → Tests Jest
-    └── db/
-        └── index.js            → Connexion Neon PostgreSQL
+    │   ├── scoring.js              → Algorithme de scoring (backend)
+    │   ├── validators.js           → Schémas de validation Zod (backend)
+    │   ├── handler.js              → asyncHandler + middlewareErreurs
+    │   └── email.js                → Envoi emails (validation + reset)
+    └── tests/
+        └── scoring.test.js         → Tests Jest
 ```
 
 ---
@@ -170,6 +191,9 @@ Projet-CarScore/
 
 6️⃣ **CarDetails** — Score détaillé, coût mensuel, dépréciation, recommandation
 7️⃣ **AdminDashboard** — Tableau de bord administration (role = admin)
+8️⃣ **ForgotPassword** — Demande de réinitialisation du mot de passe
+9️⃣ **ResetPassword** — Formulaire de nouveau mot de passe
+🔟 **Verify** — Validation du compte par email
 
 ---
 
@@ -198,9 +222,23 @@ Projet-CarScore/
 - Mots de passe hashés avec **bcrypt** (minimum 12 caractères)
 - Authentification par **tokens JWT** (24h)
 - Routes protégées via **middleware verifierToken**
+- Validation des inputs avec **Zod** côté serveur ET côté client
 - Limite de **5 véhicules** par utilisateur (backend + frontend)
 - **Requêtes paramétrées** contre l'injection SQL
 - Variables sensibles dans `.env` (jamais dans le code source)
+- Gestion d'erreurs centralisée via **asyncHandler + middlewareErreurs**
+
+---
+
+## 🗄️ Migrations
+
+Les évolutions du schéma sont gérées via des fichiers SQL numérotés :
+
+```
+001_create_users.sql     → Table users (id, nom, email, password, role, verifie)
+002_create_vehicules.sql → Table vehicules (FK → users, ON DELETE CASCADE)
+003_create_scores.sql    → Table scores (FK → vehicules, ON DELETE CASCADE)
+```
 
 ---
 
@@ -222,28 +260,35 @@ pnpm test
 
 ### CI/CD — GitHub Actions
 
-Les tests se lancent automatiquement à chaque push sur `main`.
+À chaque push sur `main` :
+1. Les tests backend (Jest) se lancent automatiquement
+2. Les tests frontend (Vitest) se lancent automatiquement
+3. Si tous les tests passent → déploiement automatique sur Render
 
 ---
 
 ## 🚀 API REST — Routes
 
-| Méthode | Route | Description |
-|---|---|---|
-| POST | /api/register | Inscription utilisateur |
-| POST | /api/login | Connexion + token JWT |
-| GET | /api/vehicules | Récupérer les véhicules |
-| POST | /api/vehicules | Ajouter un véhicule |
-| DELETE | /api/vehicules/:id | Supprimer un véhicule |
-| POST | /api/scores | Calculer et sauvegarder le score |
-| GET | /api/scores/:vehiculeId | Récupérer le score |
-| GET | /api/admin/stats | Statistiques globales (admin) |
-| GET | /api/admin/users | Liste des utilisateurs (admin) |
-| DELETE | /api/admin/users/:id | Supprimer un utilisateur (admin) |
+| Méthode | Route | Description | Auth |
+|---|---|---|---|
+| POST | /api/register | Inscription utilisateur | ❌ |
+| POST | /api/login | Connexion + token JWT | ❌ |
+| GET | /api/verify/:token | Validation email | ❌ |
+| POST | /api/forgot-password | Demande reset mot de passe | ❌ |
+| POST | /api/reset-password/:token | Réinitialiser mot de passe | ❌ |
+| GET | /api/vehicules | Récupérer les véhicules | ✅ JWT |
+| POST | /api/vehicules | Ajouter un véhicule | ✅ JWT |
+| DELETE | /api/vehicules/:id | Supprimer un véhicule | ✅ JWT |
+| POST | /api/scores | Calculer et sauvegarder le score | ✅ JWT |
+| GET | /api/scores/:vehiculeId | Récupérer le score | ✅ JWT |
+| GET | /api/admin/stats | Statistiques globales | ✅ Admin |
+| GET | /api/admin/users | Liste des utilisateurs | ✅ Admin |
+| PUT | /api/admin/users/:id | Désactiver un utilisateur | ✅ Admin |
+| DELETE | /api/admin/users/:id | Supprimer un utilisateur | ✅ Admin |
+| GET | /api/admin/analyses | Analyses récentes | ✅ Admin |
 
 ---
 
 ## 👨‍💻 Réalisation
 
-Projet développé en solo dans le cadre d'un titre RNCP.
-
+Projet développé en solo par Gulbaddin KHOSTY dans le cadre d'un titre RNCP.
