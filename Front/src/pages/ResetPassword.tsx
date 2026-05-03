@@ -37,6 +37,7 @@ export default function ResetPassword() {
     }
 
     return (
+        
         <div style={{ textAlign: 'center', padding: '100px 20px' }}>
             <h2>🔐 Nouveau mot de passe</h2>
             <p>Entrez votre nouveau mot de passe.</p>

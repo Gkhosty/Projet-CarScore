@@ -7,6 +7,7 @@ import Header from "../components/header";
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
     const [afficherBienvenu, setAfficherBienvenu] = useState(true);
+    const[disparait, setDisparait] = useState(false)
     const nom = sessionStorage.getItem('nom');
     const navigate = useNavigate();
 
@@ -25,10 +26,16 @@ export default function Dashboard() {
         }
         chargerVehicules()
         // TImer bienvenu 3 secodes 
-        const timer = setTimeout(function() {
-            setAfficherBienvenu(false)
+        const timer1 = setTimeout(function() {
+            setDisparait(true)
         }, 4000)
-        return function(){clearTimeout(timer)}
+        const timer2 = setTimeout(function(){
+            setAfficherBienvenu(false)
+        }, 5000)
+        return function(){
+            clearTimeout(timer1)
+            clearTimeout(timer2)
+        }
     }, [])
      // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
     async function supprimerVehicule(id: number) {
@@ -60,8 +67,10 @@ export default function Dashboard() {
             <main className="container">
                 {/* message bienvenu pour utlisatuer */}
                 {afficherBienvenu && (
-                    <div className="bienvenu">
-                        Bienvenu {nom} ! 👋
+                    <div className={`bienvenu ${disparait ? 'disparait' : ''}`}>
+                        <div className="bienvenu-text">
+                            👋 Bienvenu {nom} ! 
+                        </div>
                     </div>
                 )}
                

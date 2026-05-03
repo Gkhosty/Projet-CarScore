@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "../components/header";
-import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 import { registerSchema } from "../utils/validators.ts";
 
@@ -118,8 +117,6 @@ export default function Register() {
 
                 </section>
             </main>
-
-                    <Footer />
         </>
     )
 }

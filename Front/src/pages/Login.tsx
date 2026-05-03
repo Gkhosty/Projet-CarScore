@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginSchema } from "../utils/validators";
+import Header from "../components/header";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -38,7 +39,8 @@ export default function Login() {
 
     return (
         <>
-        
+            <Header type="auth" />
+            
             <main className="container">
                 <section className="form-section" aria-labelledby="login-title">
                     <h2 id="login-title">Connexion</h2>

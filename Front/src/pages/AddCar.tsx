@@ -289,8 +289,6 @@ export default function AddCar() {
                     </form>
                 </section>
             </main>
-
-                <Footer />
         </>
     )
 }
