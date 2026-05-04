@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
-import Footer from "../components/footer";
 import { vehiculeSchema } from "../utils/validators.ts";
 export default function AddCar() {
     const [marque, setMarque] = useState('');
@@ -17,7 +16,7 @@ export default function AddCar() {
     const [entretien, setEntretien] = useState('');
     const [ct, setCt] = useState('');
     const [nombreVehicules, setNombreVehicules] = useState(0)
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [erreur, setErreur] = useState('');
 
     useEffect(function() {
@@ -29,7 +28,7 @@ export default function AddCar() {
             });
             const data = await response.json()
             setNombreVehicules(data.length)
-            
+
             // charger les marques et modeles depuis une api
             const responseMarques = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
             const dataMarques = await responseMarques.json();
@@ -40,7 +39,7 @@ export default function AddCar() {
         }
         verifierNombreVehicules()
     }, []);
-    
+
     async function handleAddCar(event: any) {
         // validation Zod pour les les input
         event.preventDefault();
@@ -128,7 +127,7 @@ export default function AddCar() {
                                     id="marque"
                                     placeholder="Ex : Peugeot, Renault, BMW"
                                     value={marque}
-                                    
+
                                     onChange={function(event) {
                                         setMarque(event.target.value)
                                         setShowMarques(true)
@@ -164,7 +163,7 @@ export default function AddCar() {
                                     id="modele"
                                     placeholder="Ex : 208, Clio, Série 3"
                                     value={modele}
-                    
+
                                     onChange={async function(event) {
                                         setModele(event.target.value)
                                         setShowModeles(true)
