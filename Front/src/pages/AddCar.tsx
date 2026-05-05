@@ -108,7 +108,6 @@ export default function AddCar() {
     return (
         <>
             <Header type="user" />
-
             <main className="container">
                 <section aria-labelledby="add-car-title">
                     <h2 id="add-car-title">Ajouter un véhicule</h2>
