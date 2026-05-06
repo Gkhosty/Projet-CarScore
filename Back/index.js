@@ -35,12 +35,9 @@ app.get('/', (req, res) => {
     res.json({message: 'CarScore API fonctionne'});
 });
 // Middleware gestion d'erreurs centralisé
-app.use(middlewareErreurs)
+app.use(middlewareErreurs);
 //condition pour supertest
-if(process.env.NODE_ENV !== 'test'){
-    app.listen(PORT, () => {
-        console.log(`Serveur CarScore démarré sur https://localhost:${PORT}`)
-    })
-}
 
-module.exports = app;
+app.listen(PORT, () => {
+        console.log(`Serveur CarScore démarré sur https://localhost:${PORT}`)
+});
