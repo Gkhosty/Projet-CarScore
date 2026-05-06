@@ -41,6 +41,26 @@ export default function CarDetails() {
                     <p className="dashboard-score" aria-label={`Score global : ${score.score_global} sur 100`}>
                         {score.score_global}<span>/100</span>
                     </p>
+                    <p className={
+                        score.score_global >= 80 ? 'score-etat excellent' :
+                        score.score_global >= 60 ? 'score-etat bon' :
+                        score.score_global >= 40 ? 'score-etat moyen' :
+                        'score-etat critique'
+                    }>
+                        {score.score_global >= 80 ? '🏆 Excellent état' :
+                        score.score_global >= 60 ? '👍 Bon état' :
+                        score.score_global >= 40 ? '⚠️ État moyen' :
+                        '🚨 État critique'}
+                    </p>
+                    <p className="score-etat-phrase">
+                        {score.score_global >= 80
+                            ? 'Votre voiture a encore beaucoup de valeur sur le marché.'
+                            : score.score_global >= 60
+                            ? 'Votre voiture reste compétitive, gardez-la encore 1 à 2 ans.'
+                            : score.score_global >= 40
+                            ? 'Envisagez la revente dans les 6 prochains mois.'
+                            : 'Vendez rapidement avant de perdre encore plus de valeur.'}
+                    </p>
                     <p className="score-reco">
                         Recommandation : <strong>{score.recommandation}</strong>
                     </p>
@@ -122,6 +142,36 @@ export default function CarDetails() {
                 <section className="card tip-card" aria-labelledby="reco-title">
                     <h2 id="reco-title">📋 Recommandation CarScore</h2>
                     <p>Score global : <strong>{score.score_global}/100</strong></p>
+                    <p className={
+                        score.score_global >= 80 ? 'score-etat excellent' :
+                        score.score_global >= 60 ? 'score-etat bon' :
+                        score.score_global >= 40 ? 'score-etat moyen' :
+                        'score-etat critique'
+                    }>
+                        {score.score_global >= 80 ? '🏆 Excellent état' :
+                        score.score_global >= 60 ? '👍 Bon état' :
+                        score.score_global >= 40 ? '⚠️ État moyen' :
+                        '🚨 État critique'}
+                    </p>
+                    <p>
+                        {score.score_global >= 80
+                            ? `Votre véhicule présente un excellent profil avec un score de ${score.score_global}/100. Son kilométrage maîtrisé et son bon entretien constituent des atouts significatifs sur le marché de l'occasion français.`
+                            : score.score_global >= 60
+                            ? `Votre véhicule présente un bon profil avec un score de ${score.score_global}/100. Il reste compétitif sur le marché de l'occasion français mais quelques points peuvent être améliorés.`
+                            : score.score_global >= 40
+                            ? `Votre véhicule présente un profil moyen avec un score de ${score.score_global}/100. Sa valeur commence à baisser significativement sur le marché de l'occasion français.`
+                            : `Votre véhicule présente un profil critique avec un score de ${score.score_global}/100. Sa valeur diminue rapidement sur le marché de l'occasion français.`
+                        }
+                    </p>
+                    <p className="score-etat-phrase">
+                        {score.score_global >= 80
+                            ? 'Votre voiture a encore beaucoup de valeur sur le marché.'
+                            : score.score_global >= 60
+                            ? 'Votre voiture reste compétitive, gardez-la encore 1 à 2 ans.'
+                            : score.score_global >= 40
+                            ? 'Envisagez la revente dans les 6 prochains mois.'
+                            : 'Vendez rapidement avant de perdre encore plus de valeur.'}
+                    </p>
                     <p>Notre recommandation : <strong>{score.recommandation}</strong></p>
                     <p>Période idéale de revente : <strong>{score.periode_revente}</strong></p>
                 </section>

@@ -36,8 +36,11 @@ app.get('/', (req, res) => {
 });
 // Middleware gestion d'erreurs centralisé
 app.use(middlewareErreurs)
+//condition pour supertest
+if(process.env.NODE_ENV !== 'test'){
+    app.listen(PORT, () => {
+        console.log(`Serveur CarScore démarré sur https://localhost:${PORT}`)
+    })
+}
 
-app.listen(PORT, () =>{
-    console.log(`Serveur CarScore démarré sur http://localhost:${PORT}`);
-});
-
+module.exports = app;

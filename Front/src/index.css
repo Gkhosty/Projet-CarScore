@@ -465,6 +465,26 @@ legend {
   color: var(--texte-2);
 }
 
+.score-etat {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.score-etat.excellent { color: #10B981; }
+.score-etat.bon       { color: #0EA5E9; }
+.score-etat.moyen     { color: #F59E0B; }
+.score-etat.critique  { color: #EF4444; }
+
+.score-etat-phrase {
+    font-size: 14px;
+    color: #64748B;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
 .score-green  { border-left-color: var(--vert); }
 .score-green  strong, .score-green  span { color: var(--vert); }
 
