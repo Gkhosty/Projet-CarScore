@@ -5,6 +5,10 @@ export default function Header({ type }: { type: string }) {
     const navigate = useNavigate()
     const [menuOuvert, setMenuOuvert] = useState(false)
 
+    const nom = sessionStorage.getItem('token')
+    ? JSON.parse(atob(sessionStorage.getItem('token')!.split('.')[1])).nom
+    :''
+
     function handleLogout() {
         sessionStorage.removeItem('token')
         navigate('/login')
@@ -57,6 +61,7 @@ export default function Header({ type }: { type: string }) {
                 {/* DASHBOARD + ADDCAR + CARDETAILS */}
                 {type === 'user' && (
                     <ul role="list" className={`nav-menu ${menuOuvert ? 'ouvert' : ''}`}>
+                        <li><span className='header-nom'>{nom}</span></li>
                         <li><button className="btn-nav" onClick={function() { setMenuOuvert(false); navigate('/add-car') }}>+ Ajouter un véhicule</button></li>
                         <li><button onClick={function() { setMenuOuvert(false); handleLogout() }}>Déconnexion</button></li>
                     </ul>

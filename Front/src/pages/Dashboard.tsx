@@ -7,9 +7,6 @@ import Header from "../components/header";
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
     const [recherche, setRecherche] = useState('')
-    const [afficherBienvenu, setAfficherBienvenu] = useState(true);
-    const[disparait, setDisparait] = useState(false)
-    const nom = sessionStorage.getItem('nom');
     const navigate = useNavigate();
 
     // filtre pour bare de recherche
@@ -33,18 +30,8 @@ export default function Dashboard() {
             setVehicules(data)
         }
         chargerVehicules()
-        // TImer bienvenu 3 secodes
-        const timer1 = setTimeout(function() {
-            setDisparait(true)
-        }, 1500)
-        const timer2 = setTimeout(function(){
-            setAfficherBienvenu(false)
-        }, 2000)
-        return function(){
-            clearTimeout(timer1)
-            clearTimeout(timer2)
-        }
     }, [])
+
      // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
     async function supprimerVehicule(id: number) {
         const confirmation = window.confirm('Voulez-vous vraiment supprimer ce véhicule ?')
@@ -71,16 +58,8 @@ export default function Dashboard() {
     return (
         <>
             <Header type="user" />
-
             <main className="container">
-                {/* message bienvenu pour utlisatuer */}
-                {afficherBienvenu && (
-                    <div className={`bienvenu ${disparait ? 'disparait' : ''}`}>
-                        <div className="bienvenu-text">
-                            👋 Bienvenu {nom} !
-                        </div>
-                    </div>
-                )}
+
                 {/* BARRE DE RECHERCHE */}
                 <input
                     type="text"
