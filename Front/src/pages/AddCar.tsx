@@ -15,23 +15,13 @@ export default function AddCar() {
     const [region, setRegion] = useState('');
     const [entretien, setEntretien] = useState('');
     const [ct, setCt] = useState('');
-    const [nombreVehicules, setNombreVehicules] = useState(0)
     const navigate = useNavigate();
     const [erreur, setErreur] = useState('');
     const [marqueSelectionee, setMarqueSelectionee] = useState(false);
     const [modeleSelectionee, setModeleSelectionee] = useState(false);
 
     useEffect(function() {
-        async function verifierNombreVehicules() {
-            const response = await fetch('https://projet-carscore.onrender.com/api/vehicules', {
-                headers: {
-                    'authorization': 'Bearer ' + sessionStorage.getItem('token')
-                }
-            });
-            const data = await response.json()
-            setNombreVehicules(data.length)
-
-            // charger les marques et modeles depuis une api
+        async function chargerMarques() {
             const responseMarques = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
             const dataMarques = await responseMarques.json();
             const nomsMarques = dataMarques.Results.map(function(marque: any) {
@@ -39,7 +29,7 @@ export default function AddCar() {
             });
             setMarques(nomsMarques);
         }
-        verifierNombreVehicules()
+        chargerMarques()
     }, []);
 
     async function handleAddCar(event: any) {
@@ -100,19 +90,6 @@ export default function AddCar() {
             return modeleItem.Model_Name
         })
         setModeles(nomsModeles)
-    }
-
-    if ( nombreVehicules >=6){
-        return (<>
-        <Header type= "user" />
-        <main className="container">
-            <section>
-                <h2>Limite atteinte !</h2>
-                <p>Vous avez atteint la limite de 5 véhicules. Supprimez un véhicule pour ajouter un nouveau.</p>
-                <button className="btn" onClick={function() { navigate('/dashboard') }}>Retour au dashboard</button>
-            </section>
-        </main>
-        </>)
     }
 
     return (

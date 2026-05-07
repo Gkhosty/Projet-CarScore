@@ -6,10 +6,18 @@ import Header from "../components/header";
 
 export default function Dashboard() {
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
+    const [recherche, setRecherche] = useState('')
     const [afficherBienvenu, setAfficherBienvenu] = useState(true);
     const[disparait, setDisparait] = useState(false)
     const nom = sessionStorage.getItem('nom');
     const navigate = useNavigate();
+
+    // filtre pour bare de recherche
+    const vehiculesFiltres = vehicules.filter(function(vehicule: any) {
+        return vehicule.marque.toLowerCase().includes(recherche.toLowerCase()) ||
+            vehicule.modele.toLowerCase().includes(recherche.toLowerCase())
+    })
+
 
     // useEff se declanche une seule fois au chargement de la page ,
 
@@ -73,9 +81,17 @@ export default function Dashboard() {
                         </div>
                     </div>
                 )}
+                {/* BARRE DE RECHERCHE */}
+                <input
+                    type="text"
+                    placeholder="🔍 Rechercher par marque ou modèle..."
+                    value={recherche}
+                    onChange={function(event) { setRecherche(event.target.value) }}
+                    className="search-input"
+                />
 
                 {/* LISTE DES VEHICULES */}
-                {vehicules.map((vehicule: any) => (
+                {vehiculesFiltres.map((vehicule: any) => (
                     <div key={vehicule.id}>
 
                         {/* SCORE PRINCIPAL */}

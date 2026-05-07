@@ -25,14 +25,6 @@ router.post('/vehicules', verifierToken, asyncHandler(async(req, res) => {
     }
     // le middleware verifiertoken a deja decodé le token
     const user_id = req.user.id;
-    //  On Verifie le nombre de vehicule avant d'ajouter
-    const count = await sql`SELECT COUNT(*) FROM vehicules WHERE user_id = ${user_id}`;
-    const nombreVehicules = parseInt(count[0].count);
-
-    if (nombreVehicules >= 5){
-        return res.status(400).json({ erreur: 'Vous avez atteint la limite de 5 véhicules !' })
-    }
-
     const ajouterVehicule = await sql`INSERT INTO vehicules ( user_id, marque, modele, annee, kilometrage, carburant, region, entretien, ct )
     VALUES (${user_id},${marque}, ${modele}, ${annee}, ${kilometrage}, ${carburant}, ${region}, ${entretien}, ${ct}) RETURNING *`;
     res.json({ message: 'Vehicule ajoute avec succes ✅', vehicule: ajouterVehicule[0]});
