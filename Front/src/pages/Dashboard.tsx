@@ -25,13 +25,13 @@ export default function Dashboard() {
             setVehicules(data)
         }
         chargerVehicules()
-        // TImer bienvenu 3 secodes 
+        // TImer bienvenu 3 secodes
         const timer1 = setTimeout(function() {
             setDisparait(true)
-        }, 4000)
+        }, 1500)
         const timer2 = setTimeout(function(){
             setAfficherBienvenu(false)
-        }, 5000)
+        }, 2000)
         return function(){
             clearTimeout(timer1)
             clearTimeout(timer2)
@@ -69,11 +69,11 @@ export default function Dashboard() {
                 {afficherBienvenu && (
                     <div className={`bienvenu ${disparait ? 'disparait' : ''}`}>
                         <div className="bienvenu-text">
-                            👋 Bienvenu {nom} ! 
+                            👋 Bienvenu {nom} !
                         </div>
                     </div>
                 )}
-               
+
                 {/* LISTE DES VEHICULES */}
                 {vehicules.map((vehicule: any) => (
                     <div key={vehicule.id}>

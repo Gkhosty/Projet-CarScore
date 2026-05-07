@@ -18,7 +18,7 @@ const vehiculeSchema = z.object({
     marque: z.string().min(1, 'Marque obligatoire'),
     modele: z.string().min(1, 'Modele obligatoire'),
     annee: z.number().min(1990, 'Année minimum 1990').max(2026, 'Année maximum 2026'),
-    kilometrage: z.number().min(0, 'Kilométrage invalide'),
+    kilometrage: z.number().min(0, 'Kilométrage invalide').max(500000, 'Kilométrage maximum 500000'),
     carburant: z.enum(['essence', 'diesel', 'hybride', 'electrique', 'gpl']),
     region: z.enum(['paris', 'idf', 'lyon', 'marseille', 'bordeaux', 'toulouse', 'nantes', 'province']),
     entretien: z.enum(['complet', 'partiel', 'absent']),

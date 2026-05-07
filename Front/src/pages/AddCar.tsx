@@ -18,6 +18,8 @@ export default function AddCar() {
     const [nombreVehicules, setNombreVehicules] = useState(0)
     const navigate = useNavigate();
     const [erreur, setErreur] = useState('');
+    const [marqueSelectionee, setMarqueSelectionee] = useState(false);
+    const [modeleSelectionee, setModeleSelectionee] = useState(false);
 
     useEffect(function() {
         async function verifierNombreVehicules() {
@@ -41,8 +43,16 @@ export default function AddCar() {
     }, []);
 
     async function handleAddCar(event: any) {
-        // validation Zod pour les les input
         event.preventDefault();
+        if(!marqueSelectionee){
+            setErreur('Veuillez choisir une marque dans la liste !')
+            return
+        }
+        if(!modeleSelectionee){
+            setErreur('Veuillez choisir un modele dans la liste !')
+            return
+        }
+        // validation Zod pour les les input
         const result = vehiculeSchema.safeParse({
             marque,
             modele,
@@ -130,6 +140,7 @@ export default function AddCar() {
                                     onChange={function(event) {
                                         setMarque(event.target.value)
                                         setShowMarques(true)
+                                        setMarqueSelectionee(false)
                                     }}
                                     required
                                 />
@@ -145,6 +156,7 @@ export default function AddCar() {
                                                         <li key={marqueItem} onClick={function() {
                                                             setMarque(marqueItem)
                                                             setShowMarques(false)
+                                                            setMarqueSelectionee(true);
                                                         }}>
                                                             {marqueItem}
                                                         </li>
@@ -166,6 +178,7 @@ export default function AddCar() {
                                     onChange={async function(event) {
                                         setModele(event.target.value)
                                         setShowModeles(true)
+                                        setModeleSelectionee(false)
                                         if (marque.length > 0) {
                                             await chargerModeles()
                                         }
@@ -184,6 +197,7 @@ export default function AddCar() {
                                                     <li key={modeleItem} onClick={function() {
                                                         setModele(modeleItem)
                                                         setShowModeles(false)
+                                                        setModeleSelectionee(true)
                                                     }}>
                                                         {modeleItem}
                                                     </li>
@@ -216,6 +230,7 @@ export default function AddCar() {
                                         id="kilometrage"
                                         placeholder="Ex : 65 000"
                                         min="0"
+                                        max="500000"
                                         value={kilometrage}
                                         onChange={(event) => setKilometrage(event.target.value)}
                                         required
