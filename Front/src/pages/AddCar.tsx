@@ -79,7 +79,7 @@ export default function AddCar() {
                 },
                 body: JSON.stringify({ vehicule_id: data.vehicule.id })
             })
-            navigate('/dashboard')
+            navigate(`/car/${data.vehicule.id}`)
         }
     }
 
@@ -203,7 +203,9 @@ export default function AddCar() {
                                 <div className="form-group">
                                     <label htmlFor="kilometrage">Kilométrage (km)</label>
                                     <input
-                                        type="number"
+                                        type="text"
+                                        inputMode="numeric"
+                                        pattern="[0-9]*"
                                         id="kilometrage"
                                         placeholder="Ex : 65 000"
                                         min="0"

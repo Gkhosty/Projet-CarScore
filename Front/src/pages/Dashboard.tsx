@@ -27,7 +27,7 @@ export default function Dashboard() {
                 }
             })
             const data = await response.json()
-            setVehicules(data)
+            setVehicules(data.reverse())
         }
         chargerVehicules()
     }, [])

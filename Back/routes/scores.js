@@ -9,7 +9,7 @@ const { asyncHandler }  = require('../utils/handler');
 
 router.post('/scores', verifierToken, asyncHandler(async(req, res) =>{
     const { vehicule_id } = req.body;
-    // validation z 
+    // validation z
     const result = scoreShema.safeParse({
         vehicule_id: parseInt(vehicule_id)
     });
@@ -22,10 +22,13 @@ router.post('/scores', verifierToken, asyncHandler(async(req, res) =>{
     if(!vehicule){
         return res.status(404).json({ erreur: 'Vehicule introuvable'});
     };
-     const score = calculerScore(vehicule);
-    await sql`INSERT INTO scores 
-    (vehicule_id, score_global, score_kilometrage, score_annee, score_carburant, score_region, score_entretien, score_tc, score_tc_bonus, recommandation, cout_mensuel, depreciation, perte_annuelle, periode_revente) 
-    VALUES 
+     const score = calculerScore({
+        ...vehicule,
+        kilometrage: parseInt(vehicule.kilometrage)
+     });
+    await sql`INSERT INTO scores
+    (vehicule_id, score_global, score_kilometrage, score_annee, score_carburant, score_region, score_entretien, score_tc, score_tc_bonus, recommandation, cout_mensuel, depreciation, perte_annuelle, periode_revente)
+    VALUES
     (${id}, ${score.scoreGlobal}, ${score.scoreKilometrage}, ${score.scoreAnnee}, ${score.scoreCarburant}, ${score.scoreRegion}, ${score.scoreEntretien}, ${score.scoreCT}, ${score.scoreCTBonus}, ${score.recommandation}, ${score.coutMensuel}, ${score.depreciation}, ${score.perteAnnuelle}, 'Mars - Juin')`;
     res.json({ score });
 }))
