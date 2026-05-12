@@ -39,5 +39,5 @@ jobs:
       - name: Déployer sur Render
         run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
 
-      - name: Déployer sur Render
+      - name: Déployer sur Vercel
         run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
