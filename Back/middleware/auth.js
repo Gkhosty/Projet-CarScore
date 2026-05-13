@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const verifieToken = (req, res, next) => {
+// verfification que le token jwt est valide, autilisé sur tous les route protégés
+const verifierToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -21,5 +22,12 @@ const verifieToken = (req, res, next) => {
         return res.status(401).json({ erreur: 'Token invalide ou expiré' });
     }
 };
+// verifie que l'autlisateur est un admin, utilisé sur les routes amdin
 
-module.exports = verifieToken;
+const verifierAdmin = (req, res, next) => {
+    if(req.user.role !== 'admin'){
+        return res.status(403).json({ erreur: 'Accés refusé - réservé aux adminstrateurs'})
+        next()
+    }
+}
+module.exports = { verifierToken, verifierAdmin };

@@ -3,7 +3,7 @@ const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const calculerScore = require('../utils/scoring');
-const verifierToken = require('../middleware/auth');
+const { verifierToken } = require('../middleware/auth');
 const { scoreShema } = require('../utils/validators');
 const { asyncHandler }  = require('../utils/handler');
 

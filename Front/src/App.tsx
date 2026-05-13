@@ -8,9 +8,10 @@ import Dashboard from './pages/Dashboard';
 import AddCar from './pages/AddCar';
 import CarDetails from './pages/CarDetails';
 import AdminDashboard from './pages/AdminDashboard';
-import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import { ProtectedRouteAdmin, ProtectedRouteUser} from './components/ProtectedRoute';
+
 
 export default function App() {
     return (
@@ -23,16 +24,16 @@ export default function App() {
                 <Route path='/forgot-password' element={<ForgotPassword />} />
                 <Route path='/reset-password/:token' element={<ResetPassword />} />
                 <Route path="/dashboard" element={
-                    <ProtectedRoute><Dashboard /></ProtectedRoute>
+                    <ProtectedRouteUser><Dashboard /></ProtectedRouteUser>
                 } />
                 <Route path="/add-car" element={
-                    <ProtectedRoute><AddCar /></ProtectedRoute>
+                    <ProtectedRouteUser><AddCar /></ProtectedRouteUser>
                 } />
                 <Route path="/car/:id" element={
-                    <ProtectedRoute><CarDetails /></ProtectedRoute>
+                    <ProtectedRouteUser><CarDetails /></ProtectedRouteUser>
                 } />
                 <Route path="/admin" element={
-                    <ProtectedRoute><AdminDashboard /></ProtectedRoute>
+                    <ProtectedRouteAdmin><AdminDashboard /></ProtectedRouteAdmin>
                 } />
             </Routes>
         </BrowserRouter>

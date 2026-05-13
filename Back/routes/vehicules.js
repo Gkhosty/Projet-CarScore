@@ -2,7 +2,7 @@ const express = require('express');
 const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
-const verifierToken = require('../middleware/auth');
+const {verifierToken} = require('../middleware/auth');
 const { vehiculeSchema } = require('../utils/validators');
 
 const { asyncHandler } = require('../utils/handler');
