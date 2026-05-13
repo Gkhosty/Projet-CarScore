@@ -83,6 +83,7 @@ export default function Header({ type }: { type: string }) {
                 {/* ADMIN */}
                 {type === 'admin' && (
                     <ul role="list" className={`nav-menu ${menuOuvert ? 'ouvert' : ''}`}>
+                        <li><span className='header-nom'>{nom}</span></li>
                         <li><span className="admin-badge">Administration</span></li>
                         <li><button onClick={function() { setMenuOuvert(false); handleLogout() }}>Déconnexion</button></li>
                     </ul>
