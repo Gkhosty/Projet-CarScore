@@ -27,7 +27,7 @@ const verifieToken = (req, res, next) => {
 const verifierAdmin = (req, res, next) => {
     if(req.user.role !== 'admin'){
         return res.status(403).json({ erreur: 'Accés refusé - réservé aux adminstrateurs'})
-        next()
     }
+    next()
 }
 module.exports = { verifieToken, verifierAdmin };

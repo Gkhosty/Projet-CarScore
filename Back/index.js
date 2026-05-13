@@ -31,13 +31,25 @@ app.use('/api', vehiculesRouter);
 app.use('/api', scoresRouter);
 app.use('/api', adminRouter);
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
     res.json({message: 'CarScore API fonctionne'});
 });
+
+// Route health pour garder Render éveillé
+app.get('/api/health', function(req, res) {
+    res.json({ status: 'ok' });
+});
+
+// Ping toutes les 14 minutes pour garder Render éveillé
+setInterval(function() {
+    fetch('https://projet-carscore.onrender.com/api/health')
+        .then(function() { console.log('Ping Render OK') })
+        .catch(function() { console.log('Ping échoué') })
+}, 14 * 60 * 1000);
+
 // Middleware gestion d'erreurs centralisé
 app.use(middlewareErreurs);
-//condition pour supertest
 
-app.listen(PORT, () => {
+app.listen(PORT, function() {
         console.log(`Serveur CarScore démarré sur https://localhost:${PORT}`)
 });

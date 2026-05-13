@@ -46,8 +46,11 @@ export default function AdminDashboard() {
         setUsers(users.filter((u: any) => u.id !== id))
     }
 
-    if (!stats) return <p>Chargement...</p>
-
+    if (!stats) return (
+    <main className="container">
+    <p>Chargement...</p>
+    </main>
+    )
     return (
         <>
             <Header type="admin" />
