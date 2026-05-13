@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Header({ type }: { type: string }) {
     const navigate = useNavigate()
     const [menuOuvert, setMenuOuvert] = useState(false)
-    const nom = sessionStorage.getItem('token')
-    ? JSON.parse(atob(sessionStorage.getItem('token')!.split('.')[1])).nom
-    :''
+    const [nom, setNom] = useState('')
+
+    // Récupère le nom depuis Neon via /me
+    useEffect(function() {
+        async function chargerNom() {
+            const response = await fetch('https://projet-carscore.onrender.com/api/me', {
+                headers: {
+                    'authorization': 'Bearer ' + sessionStorage.getItem('token')
+                }
+            })
+            const data = await response.json()
+            setNom(data.user.nom)
+        }
+        if (type === 'user' || type === 'admin') {
+            chargerNom()
+        }
+    }, [])
 
     function handleLogout() {
         sessionStorage.removeItem('token')
@@ -60,9 +74,9 @@ export default function Header({ type }: { type: string }) {
                 {/* DASHBOARD + ADDCAR + CARDETAILS */}
                 {type === 'user' && (
                     <ul role="list" className={`nav-menu ${menuOuvert ? 'ouvert' : ''}`}>
+                        <li><span className='header-nom'>{nom}</span></li>
                         <li><button className="btn-nav" onClick={function() { setMenuOuvert(false); navigate('/add-car') }}>+ Ajouter un véhicule</button></li>
                         <li><button onClick={function() { setMenuOuvert(false); handleLogout() }}>Déconnexion</button></li>
-                        <li><span className='header-nom'>{nom}</span></li>
                     </ul>
                 )}
 

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // verfification que le token jwt est valide, autilisé sur tous les route protégés
-const verifierToken = (req, res, next) => {
+const verifieToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -30,4 +30,4 @@ const verifierAdmin = (req, res, next) => {
         next()
     }
 }
-module.exports = { verifierToken, verifierAdmin };
+module.exports = { verifieToken, verifierAdmin };

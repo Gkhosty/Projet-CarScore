@@ -2,10 +2,10 @@ const express = require('express');
 const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
-const { verifierToken, verifierAdmin } = require('../middleware/auth');
+const { verifieToken, verifierAdmin } = require('../middleware/auth');
 const { asyncHandler } = require('../utils/handler');
 
-router.get('/admin/stats', verifierToken, verifierAdmin, asyncHandler(async(req, res) => {
+router.get('/admin/stats', verifieToken, verifierAdmin, asyncHandler(async(req, res) => {
     const totalUsers = await sql`SELECT COUNT(*) FROM users`;
     const totalVehicules = await sql`SELECT COUNT(*) FROM vehicules`;
     const totalScores = await sql`SELECT COUNT(*) FROM scores`;
@@ -18,24 +18,24 @@ router.get('/admin/stats', verifierToken, verifierAdmin, asyncHandler(async(req,
     });
 }));
 
-router.get('/admin/users', verifierToken, verifierAdmin, asyncHandler(async(req, res) => {
+router.get('/admin/users', verifieToken, verifierAdmin, asyncHandler(async(req, res) => {
     const users = await sql`SELECT id, nom, email, role, verifie, created_at FROM users`;
     res.json({ users });
 }));
 
-router.put('/admin/users/:id', verifierToken, verifierAdmin, asyncHandler(async(req, res) => {
+router.put('/admin/users/:id', verifieToken, verifierAdmin, asyncHandler(async(req, res) => {
     const id = parseInt(req.params.id);
     await sql`UPDATE users SET role = 'inactif' WHERE id = ${id}`;
     res.json({ message: 'Utilisateur desactive ✅' });
 }));
 
-router.delete('/admin/users/:id', verifierToken, verifierAdmin, asyncHandler(async(req, res) => {
+router.delete('/admin/users/:id', verifieToken, verifierAdmin, asyncHandler(async(req, res) => {
     const id = parseInt(req.params.id);
     const result = await sql`DELETE FROM users WHERE id = ${id}`;
     res.json(result);
 }));
 
-router.get('/admin/analyses', verifierToken, verifierAdmin, asyncHandler(async(req, res) => {
+router.get('/admin/analyses', verifieToken, verifierAdmin, asyncHandler(async(req, res) => {
     const analyses = await sql`
         SELECT
             scores.id,

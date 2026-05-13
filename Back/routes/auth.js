@@ -8,9 +8,10 @@ const crypto = require('crypto');
 const { registerSchema, loginSchema } = require('../utils/validators');
 const { asyncHandler }  = require('../utils/handler');
 const router = express.Router();
+const { verifieToken } = require('../middleware/auth');
 
-// Stockage temporaire en mémoire — PAS dans Neon !
-const comptesEnAttente = {};
+
+// Stockage temporaire en mémoire pour le reset password
 const tokensReset = {};
 
 router.post('/register', asyncHandler(async(req, res) => {
@@ -28,30 +29,24 @@ router.post('/register', asyncHandler(async(req, res) => {
         return res.status(400).json({ erreur: 'Cet email est déjà utilisé !' });
     };
 
-    // Vérifier si email déjà en attente de validation
-    const enAttente = Object.values(comptesEnAttente).find(c => c.email === email);
-    if (enAttente) {
-        return res.status(400).json({ erreur: 'Un email de validation a déjà été envoyé !' });
-    };
-
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Générer un token unique
-    const token = crypto.randomBytes(32).toString('hex');
+    // Générer un JWT avec les données du compte — expire dans 24h
+    const token = jwt.sign(
+        { nom, email, password: hashedPassword },
+        process.env.JWT_SECRET,
+        { expiresIn: '24h' }
+    )
 
-    // Stocker en mémoire — PAS dans Neon !
-    comptesEnAttente[token] = { nom, email, password: hashedPassword };
-
-    // Envoyer l'email de validation
+    // Envoyer l'email de validation avec le JWT dans l'URL
     await envoyerEmailValidation(email, token);
-
     res.json({ message: 'Vérifiez votre email pour activer votre compte 📧' });
 }));
 
 router.post('/login', asyncHandler(async(req, res) => {
     const { email, password } = req.body;
-    
+
     // validation des champs avec z
     const result = loginSchema.safeParse(req.body);
     if(!result.success){
@@ -68,8 +63,8 @@ router.post('/login', asyncHandler(async(req, res) => {
 
     // 2. Vérifier si le compte est validé
     if (!user.verifie) {
-        return res.status(400).json({ 
-            erreur: 'Veuillez valider votre email avant de vous connecter !' 
+        return res.status(400).json({
+            erreur: 'Veuillez valider votre email avant de vous connecter !'
         });
     }
 
@@ -81,7 +76,7 @@ router.post('/login', asyncHandler(async(req, res) => {
 
     // 4. Générer le token JWT
     const token = jwt.sign(
-        { id: user.id, role: user.role, nom: user.nom },
+        { id: user.id, role: user.role},
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
     );
@@ -92,24 +87,26 @@ router.post('/login', asyncHandler(async(req, res) => {
 router.get('/verify/:token', asyncHandler(async(req, res) => {
     const { token } = req.params;
 
-    // On cherche les données en mémoire
-    const compte = comptesEnAttente[token];
+    // Vérifier et décoder le JWT
+    try {
+        const compte = jwt.verify(token, process.env.JWT_SECRET)
 
-    // Si token invalide
-    if (!compte) {
+        // Vérifier si email déjà utilisé
+        const existant = await sql`SELECT * FROM users WHERE email = ${compte.email}`;
+        if (existant.length > 0) {
+            return res.status(400).json({ erreur: 'Ce compte existe déjà !' });
+        }
+
+        // On insère dans Neon maintenant !
+        await sql`
+            INSERT INTO users (nom, email, password, verifie)
+            VALUES (${compte.nom}, ${compte.email}, ${compte.password}, true)
+        `;
+
+        res.json({ message: 'Compte validé avec succès ! Vous pouvez vous connecter ✅' });
+    } catch (erreur) {
         return res.status(400).json({ erreur: 'Lien invalide ou expiré !' });
     }
-
-    // On insère dans Neon maintenant !
-    await sql`
-        INSERT INTO users (nom, email, password, verifie)
-        VALUES (${compte.nom}, ${compte.email}, ${compte.password}, true)
-    `;
-
-    // On supprime de la mémoire
-    delete comptesEnAttente[token];
-
-    res.json({ message: 'Compte validé avec succès ! Vous pouvez vous connecter ✅' });
 }));
 
 router.post('/forgot-password', asyncHandler(async(req, res) => {
@@ -170,8 +167,8 @@ router.post('/reset-password/:token', asyncHandler(async(req, res) => {
 
     // Mettre à jour dans Neon
     await sql`
-        UPDATE users 
-        SET password = ${hashedPassword} 
+        UPDATE users
+        SET password = ${hashedPassword}
         WHERE email = ${tokenData.email}
     `;
 
@@ -180,5 +177,17 @@ router.post('/reset-password/:token', asyncHandler(async(req, res) => {
 
     res.json({ message: 'Mot de passe modifié avec succès ! Connectez-vous ✅' });
 }));
+
+// Récupère les infos de l'utilisateur connecté depuis Neon
+router.get('/me', verifieToken, asyncHandler(async(req, res) => {
+    const result = await sql`SELECT id, nom, email, role FROM users WHERE id = ${req.user.id}`
+    const user = result[0]
+    if (!user) {
+        return res.status(404).json({ erreur: 'Utilisateur introuvable' })
+    }
+    res.json({ user })
+}));
+
+module.exports = router;
 
 module.exports = router;

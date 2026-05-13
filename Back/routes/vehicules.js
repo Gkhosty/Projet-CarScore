@@ -2,12 +2,12 @@ const express = require('express');
 const { neon } = require('@neondatabase/serverless');
 const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
-const {verifierToken} = require('../middleware/auth');
+const {verifieToken} = require('../middleware/auth');
 const { vehiculeSchema } = require('../utils/validators');
 
 const { asyncHandler } = require('../utils/handler');
 
-router.post('/vehicules', verifierToken, asyncHandler(async(req, res) => {
+router.post('/vehicules', verifieToken, asyncHandler(async(req, res) => {
 
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
     // Validation z pour le formulaire
@@ -31,7 +31,7 @@ router.post('/vehicules', verifierToken, asyncHandler(async(req, res) => {
     res.json({ message: 'Vehicule ajoute avec succes ✅', vehicule: ajouterVehicule[0]});
 }));
 
-router.get('/vehicules', verifierToken, asyncHandler(async(req, res) => {
+router.get('/vehicules', verifieToken, asyncHandler(async(req, res) => {
 
     const user_id = req.user.id;
 
@@ -44,7 +44,7 @@ router.get('/vehicules', verifierToken, asyncHandler(async(req, res) => {
     res.json(vehicules);
 }));
 
-router.delete('/vehicules/:id', verifierToken, asyncHandler(async(req, res) => {
+router.delete('/vehicules/:id', verifieToken, asyncHandler(async(req, res) => {
     const user_id = req.user.id
     const id = parseInt(req.params.id)
     const result = await sql`DELETE FROM vehicules WHERE id = ${id} AND user_id = ${user_id}`;
