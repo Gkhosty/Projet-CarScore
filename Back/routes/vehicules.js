@@ -24,6 +24,15 @@ router.post('/vehicules', verifieToken, asyncHandler(async(req, res) => {
     if(!result.success){
         return res.status(400).json({ erreur: result.error.issues[0].message });
     }
+       // Validation marque via NHTSA
+    const responseNHTSA = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json')
+    const dataNHTSA = await responseNHTSA.json()
+    const marquesAutorisees = dataNHTSA.Results.map(function(item) {
+        return item.Make_Name.toLowerCase()
+    })
+    if(!marquesAutorisees.includes(marque.toLowerCase())){
+        return res.status(400).json({ erreur: 'Marque invalide — veuillez choisir une marque dans la liste' })
+    }
     // le middleware verifiertoken a deja decodé le token
     const user_id = req.user.id;
     const ajouterVehicule = await sql`INSERT INTO vehicules ( user_id, marque, modele, annee, kilometrage, carburant, region, entretien, ct )
