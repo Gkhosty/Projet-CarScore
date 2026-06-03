@@ -114,28 +114,28 @@ export default function CarDetails() {
                         </li>
 
                     </ul>
-                </section>
 
+                </section>
                 {/* ANALYSE FINANCIERE */}
                 <section aria-labelledby="finance-title">
                     <h2 id="finance-title">Analyse financière</h2>
-                    <ul className="grid" role="list">
-                        <li className="card">
+                    <div className="grid">
+                        <div className="card">
                             <h3>💰 Coût mensuel estimé</h3>
                             <p className="card-value">{score.cout_mensuel} €</p>
                             <p className="card-hint">Entretien courant et dépréciation mensuelle inclus</p>
-                        </li>
-                        <li className="card">
+                        </div>
+                        <div className="card">
                             <h3>📉 Dépréciation annuelle</h3>
                             <p className="card-value">~{score.perte_annuelle} €</p>
                             <p className="card-hint">Estimation basée sur le taux de dépréciation moyen</p>
-                        </li>
-                        <li className="card">
+                        </div>
+                        <div className="card">
                             <h3>📆 Période de revente conseillée</h3>
                             <p className="card-value">{score.periode_revente}</p>
                             <p className="card-hint">Les prix sont mieux soutenus avant les vacances d'été</p>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </section>
 
                 {/* RECOMMANDATION FINALE */}

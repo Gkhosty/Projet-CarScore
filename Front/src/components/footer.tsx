@@ -4,7 +4,7 @@ export default function Footer() {
         <footer>
             <div className="footer-dark">
                 <div className="footer-stat-block">
-                    <span className="footer-stat-number">40 000 000</span>
+                    <span className="footer-stat-number">38 000 000</span>
                     <span className="footer-stat-label">propriétaires de véhicules en France</span>
                 </div>
                 <p className="footer-slogan">Un score. Une recommandation. Une décision.</p>

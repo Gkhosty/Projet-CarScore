@@ -478,6 +478,15 @@ legend {
   margin-top: 24px;
 }
 
+/* Supprime les puces sur les listes de la Home */
+.criteria-list,
+.steps-list,
+.score-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 /* Chaque ligne de score avec bordure colorée à gauche */
 .score-item {
   background-color: var(--blanc);
@@ -565,6 +574,7 @@ legend {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  margin-bottom: 24px;
 }
 .vehicle-info h3 {
   font-size: 1.1rem;

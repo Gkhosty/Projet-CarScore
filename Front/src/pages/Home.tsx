@@ -14,8 +14,8 @@ export default function Home() {
                 {/* HERO */}
                 <section className="hero container" aria-labelledby="hero-title">
                     <h2 id="hero-title">Le Credit Score de votre Voiture</h2>
-                    <p>CarScore  analyse votre véhicule selon les critères réels du marché automobile français et vous délivre un score sur 100, accompagné d'une recommandation personnalisée : conserver ou revendre.</p>
-                    <button className="btn" onClick={() => navigate('/register')}>Analyser mon véhicule</button>
+                    <p>CarScore analyse votre véhicule selon les critères réels du marché automobile français et vous délivre un score sur 100, accompagné d'une recommandation personnalisée : conserver ou revendre.</p>
+                    <button className="btn" onClick={function() { navigate('/register') }}>Analyser mon véhicule</button>
                 </section>
 
                 {/* COMMENT CA MARCHE */}
@@ -92,7 +92,7 @@ export default function Home() {
                         </article>
                         <article className="card">
                             <h3>💰 Entièrement gratuit</h3>
-                            <p>CarScore AI est accessible sans abonnement ni frais cachés.</p>
+                            <p>CarScore est accessible sans abonnement ni frais cachés.</p>
                         </article>
                     </div>
                 </section>
@@ -128,7 +128,7 @@ export default function Home() {
                 <section className="hero container cta-final" aria-labelledby="cta-title">
                     <h2 id="cta-title">Prenez les bonnes décisions pour votre véhicule</h2>
                     <p>Rejoignez CarScore et obtenez une analyse complète et personnalisée de votre voiture.</p>
-                    <button className="btn" onClick={() => navigate('/register')}>Analyser mon véhicule</button>
+                    <button className="btn" onClick={function() { navigate('/register') }}>Analyser mon véhicule</button>
                 </section>
 
             </main>

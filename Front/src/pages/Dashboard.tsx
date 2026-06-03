@@ -10,14 +10,12 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     // filtre pour bare de recherche
-    const vehiculesFiltres = vehicules.filter(function(vehicule: any) {
+    const vehiculesFiltres = vehicules.filter(function(vehicule: Vehicule) {
         return vehicule.marque.toLowerCase().includes(recherche.toLowerCase()) ||
             vehicule.modele.toLowerCase().includes(recherche.toLowerCase())
     })
 
-
-    // useEff se declanche une seule fois au chargement de la page ,
-
+    // useEff se declanche une seule fois au chargement de la page
     useEffect(() => {
         async function chargerVehicules() {
             // on fait une requit pour cette api pour recuperer tous les vehicules de users connecté
@@ -32,7 +30,7 @@ export default function Dashboard() {
         chargerVehicules()
     }, [])
 
-     // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
+    // function pour supprimer Un vehicule users c'est une function que recoit id du vehicule et envoie une req pour suprimer au back
     async function supprimerVehicule(id: number) {
         const confirmation = window.confirm('Voulez-vous vraiment supprimer ce véhicule ?')
         if (!confirmation){
@@ -46,14 +44,11 @@ export default function Dashboard() {
             }
         });
         const nouveauxVehicules = vehicules.filter(function(vehicule) {
-            return vehicule.id !==id
+            return vehicule.id !== id
         });
 
         setVehicules(nouveauxVehicules)
-
     }
-
-
 
     return (
         <>
@@ -69,79 +64,36 @@ export default function Dashboard() {
                     className="search-input"
                 />
 
-                {/* LISTE DES VEHICULES */}
-                {vehiculesFiltres.map((vehicule: any) => (
-                    <div key={vehicule.id}>
+                {/* TITRE UNE SEULE FOIS + LISTE DES VEHICULES */}
+                <section aria-labelledby="vehicles-title">
+                    <h2 id="vehicles-title">Mes véhicules</h2>
 
-                        {/* SCORE PRINCIPAL */}
-                        <section aria-labelledby={`score-title-${vehicule.id}`}>
-                            <h2 id={`score-title-${vehicule.id}`}>Votre score CarScore</h2>
-                            <div className="score-block">
-                                <p className="dashboard-score" aria-label={`Score : ${vehicule.score_global} sur 100`}>
-                                    {vehicule.score_global}<span>/100</span>
-                                </p>
-                                <p className="score-reco">
-                                    Recommandation : <strong>
-                                        {vehicule.score_global >= 80 ? 'Garder — votre voiture a encore beaucoup de valeur' :
-                                        vehicule.score_global >= 60 ? 'Garder encore 1 à 2 ans' :
-                                        vehicule.score_global >= 40 ? 'Envisager la revente dans les 6 mois' :
-                                        'Vendre rapidement avant de perdre encore plus de valeur'}
-                                    </strong>
-                                </p>
+                    {vehiculesFiltres.map((vehicule) => (
+                        <article key={vehicule.id} className="card vehicle-card">
+                            <div className="vehicle-info">
+                                <h3>{vehicule.marque} {vehicule.modele} — {vehicule.annee}</h3>
+                                <ul role="list">
+                                    <li>📏 Kilométrage : {vehicule.kilometrage} km</li>
+                                    <li>⛽ Carburant : {vehicule.carburant}</li>
+                                    <li>📍 Région : {vehicule.region}</li>
+                                    <li>🔧 Carnet d'entretien : {vehicule.entretien}</li>
+                                    <li>✅ Contrôle technique : {vehicule.ct}</li>
+                                </ul>
                             </div>
-                        </section>
-
-                        {/* INDICATEURS */}
-                        <section aria-labelledby={`indicators-title-${vehicule.id}`}>
-                            <h2 id={`indicators-title-${vehicule.id}`}>Indicateurs clés</h2>
-                            <ul className="grid" role="list">
-                                <li className="card">
-                                    <h3>📏 Kilométrage</h3>
-                                    <p className="card-value">{vehicule.kilometrage} km</p>
-                                </li>
-                                <li className="card">
-                                    <h3>⛽ Carburant</h3>
-                                    <p className="card-value">{vehicule.carburant}</p>
-                                </li>
-                                <li className="card">
-                                    <h3>📍 Région</h3>
-                                    <p className="card-value">{vehicule.region}</p>
-                                </li>
-                                <li className="card">
-                                    <h3>📅 Année</h3>
-                                    <p className="card-value">{vehicule.annee}</p>
-                                </li>
-                            </ul>
-                        </section>
-
-                        {/* MON VEHICULE */}
-                        <section aria-labelledby={`vehicle-title-${vehicule.id}`}>
-                            <h2 id={`vehicle-title-${vehicule.id}`}>Mon véhicule</h2>
-                            <article className="card vehicle-card">
-                                <div className="vehicle-info">
-                                    <h3>{vehicule.marque} {vehicule.modele} — {vehicule.annee}</h3>
-                                    <ul role="list">
-                                        <li>📏 Kilométrage : {vehicule.kilometrage} km</li>
-                                        <li>⛽ Carburant : {vehicule.carburant}</li>
-                                        <li>📍 Région : {vehicule.region}</li>
-                                        <li>🔧 Carnet d'entretien : {vehicule.entretien}</li>
-                                        <li>✅ Contrôle technique : {vehicule.ct}</li>
-                                    </ul>
-                                </div>
-                                <div className="vehicle-score">
-                                    <p className="score-badge score-blue-bg" aria-label={`Score : ${vehicule.score_global} sur 100`}>
-                                        {vehicule.score_global}/100
-                                    </p>
-                                    <button className="btn" onClick={() => navigate(`/car/${vehicule.id}`)}>
-                                        Voir l'analyse complète
-                                    </button>
-                                    <button className="btn" onClick={function(){ supprimerVehicule(vehicule.id)}}>Supprimer ce véhicule</button>
-                                </div>
-                            </article>
-                        </section>
-
-                    </div>
-                ))}
+                            <div className="vehicle-score">
+                                <p className="score-badge score-blue-bg" aria-label={`Score : ${vehicule.score_global} sur 100`}>
+                                    {vehicule.score_global}/100
+                                </p>
+                                <button className="btn" onClick={() => navigate(`/car/${vehicule.id}`)}>
+                                    Voir l'analyse complète
+                                </button>
+                                <button className="btn" onClick={function(){ supprimerVehicule(vehicule.id)}}>
+                                    Supprimer ce véhicule
+                                </button>
+                            </div>
+                        </article>
+                    ))}
+                </section>
 
                 {/* CONSEIL MARCHE */}
                 <section className="card tip-card" aria-labelledby="tip-title">
@@ -151,7 +103,7 @@ export default function Dashboard() {
 
             </main>
 
-                    <Footer />
+            <Footer />
         </>
     )
 }
