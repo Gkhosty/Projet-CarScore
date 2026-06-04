@@ -70,8 +70,9 @@ header {
 /* Nom de l'utilisateur dans le header */
 .header-nom {
     color: var(--texte-2);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
 }
 
 /* Le nav contient le logo + les boutons */
@@ -90,18 +91,20 @@ nav ul {
 /* Boutons dans la navigation */
 nav ul button {
   background: none;
-  border: none;
+  border: 2px solid transparent;
   color: var(--texte-2);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
   font-weight: 500;
 }
 nav ul button:hover {
-  background-color: var(--fond);
-  color: var(--texte);
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  font-weight: 700;
 }
 
 /* Logo CarScore en haut à gauche */
@@ -132,14 +135,19 @@ main {
   padding: 60px 0;
 }
 main section {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 main section > h2 {
   font-family: 'Fraunces', serif;
-  font-size: 1.75rem;
+  font-size: 1.60rem;
   font-weight: 700;
   margin-bottom: 8px;
+  margin-top: 24px;
   color: var(--texte);
+}
+
+.score-block {
+  margin-top: 8px;
 }
 
 /* HERO
@@ -185,15 +193,18 @@ main section > h2 {
   background-color: var(--accent-fonce);
 }
 .btn-nav {
-  background-color: var(--accent) !important;
-  color: white !important;
-  border-radius: 9999px !important;
-  padding: 8px 16px !important;
-  border: none !important;
-  font-weight: 700 !important;
+  background-color: transparent;
+  color: var(--texte-2);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  border: 2px solid transparent;
+  font-weight: 500;
 }
 .btn-nav:hover {
-  background-color: var(--accent-fonce) !important;
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  font-weight: 700;
 }
 .btn-full {
   width: 100%;
@@ -481,10 +492,12 @@ legend {
 /* Supprime les puces sur les listes de la Home */
 .criteria-list,
 .steps-list,
-.score-grid {
+.kpi-grid,
+.score-grid,
+.grid {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding-left: 0;
+  margin-top: 20px;
 }
 
 /* Chaque ligne de score avec bordure colorée à gauche */
