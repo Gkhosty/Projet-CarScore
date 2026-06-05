@@ -39,3 +39,30 @@ export type Score = {
     periode_revente: string
     created_at: string
 }
+
+export type Stats = {
+    totalUsers: number
+    totalScores: number
+    scoreMoyen: number
+    totalVehicules: number
+}
+
+export type Analyse = {
+    id: number
+    marque: string
+    modele: string
+    annee: number
+    nom: string
+    score_global: number
+    carburant: string
+    region: string
+    created_at: string
+}
+
+export type NHTSAMake = {
+    Make_Name: string
+}
+
+export type NHTSAModel = {
+    Model_Name: string
+}

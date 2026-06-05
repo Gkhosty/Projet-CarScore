@@ -6,10 +6,10 @@ import Header from "../components/header";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [erreur, setErreur] = useState('')
+    const [erreur, setErreur] = useState('');
     const navigate = useNavigate();
 
-    async function handleLogin(event: any) {
+    async function handleLogin(event: { preventDefault: () => void }) {
         event.preventDefault()
         // validation Zod
         const result = loginSchema.safeParse({ email, password })
@@ -40,7 +40,7 @@ export default function Login() {
     return (
         <>
             <Header type="auth" />
-            
+
             <main className="container">
                 <section className="form-section" aria-labelledby="login-title">
                     <h2 id="login-title">Connexion</h2>

@@ -19,7 +19,7 @@ export default function CarDetails() {
             setScore(data.score)
         }
         chargerScore()
-    }, [])
+    }, [id]);
 
     if (!score) return <p>Chargement...</p>
 

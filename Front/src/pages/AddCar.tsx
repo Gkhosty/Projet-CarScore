@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import { vehiculeSchema } from "../utils/validators.ts";
+import type { NHTSAMake, NHTSAModel } from "../types/index.ts";
+
 export default function AddCar() {
     const [marque, setMarque] = useState('');
     const [modele, setModele] = useState('');
@@ -24,7 +26,7 @@ export default function AddCar() {
         async function chargerMarques() {
             const responseMarques = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
             const dataMarques = await responseMarques.json();
-            const nomsMarques = dataMarques.Results.map(function(marque: any) {
+            const nomsMarques = dataMarques.Results.map(function(marque: NHTSAMake) {
                 return marque.Make_Name;
             });
             setMarques(nomsMarques);
@@ -32,7 +34,7 @@ export default function AddCar() {
         chargerMarques()
     }, []);
 
-    async function handleAddCar(event: any) {
+    async function handleAddCar(event: { preventDefault: () => void }) {
         event.preventDefault();
         if(!marqueSelectionee){
             setErreur('Veuillez choisir une marque dans la liste !')
@@ -86,7 +88,7 @@ export default function AddCar() {
     async function chargerModeles() {
         const responseModeles = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/' + marque + '?format=json')
         const dataModeles = await responseModeles.json()
-        const nomsModeles = dataModeles.Results.map(function(modeleItem: any) {
+        const nomsModeles = dataModeles.Results.map(function(modeleItem: NHTSAModel) {
             return modeleItem.Model_Name
         })
         setModeles(nomsModeles)
@@ -98,7 +100,7 @@ export default function AddCar() {
             <main className="container">
                 <section aria-labelledby="add-car-title">
                     <h2 id="add-car-title">Ajouter un véhicule</h2>
-                    <p className="form-subtitle">Renseignez les informations de votre véhicule. Ces données permettent à CarScore AI de calculer un score précis et représentatif du marché automobile français.</p>
+                    <p className="form-subtitle">Renseignez les informations de votre véhicule. Ces données permettent à CarScore de calculer un score précis et représentatif du marché automobile français.</p>
 
                     <form onSubmit={handleAddCar} noValidate aria-label="Formulaire d'ajout de véhicule">
 
@@ -113,7 +115,6 @@ export default function AddCar() {
                                     id="marque"
                                     placeholder="Ex : Peugeot, Renault, BMW"
                                     value={marque}
-
                                     onChange={function(event) {
                                         setMarque(event.target.value)
                                         setShowMarques(true)
@@ -151,7 +152,6 @@ export default function AddCar() {
                                     id="modele"
                                     placeholder="Ex : 208, Clio, Série 3"
                                     value={modele}
-
                                     onChange={async function(event) {
                                         setModele(event.target.value)
                                         setShowModeles(true)

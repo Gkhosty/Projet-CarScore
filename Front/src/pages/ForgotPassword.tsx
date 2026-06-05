@@ -7,7 +7,7 @@ export default function ForgotPassword() {
     const [message, setMessage] = useState('')
     const [erreur, setErreur] = useState('')
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: { preventDefault: () => void }) {
         e.preventDefault()
         setErreur('')
         setMessage('')

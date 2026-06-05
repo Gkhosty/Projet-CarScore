@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import type { User } from "../types/index";
+import type { Analyse, Stats, User } from "../types/index";
 import Footer from "../components/footer";
 import Header from "../components/header";
 
 export default function AdminDashboard() {
-    const [stats, setStats] = useState<any>(null)
+    const [stats, setStats] = useState<Stats | null>(null)
     const [users, setUsers] = useState<User[]>([])
-    const [analyses, setAnalyses] = useState<any[]>([])
+    const [analyses, setAnalyses] = useState<Analyse[]>([])
 
     useEffect(() => {
         async function chargerDonnees() {
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
             method: 'PUT',
             headers: { 'authorization': 'Bearer ' + token }
         })
-        setUsers(users.map((u: any) => u.id === id ? { ...u, role: 'inactif' } : u))
+        setUsers(users.map((u: User) => u.id === id ? { ...u, role: 'inactif' } : u))
     }
 
     async function supprimerUser(id: number) {
@@ -43,7 +43,7 @@ export default function AdminDashboard() {
             method: 'DELETE',
             headers: { 'authorization': 'Bearer ' + token }
         })
-        setUsers(users.filter((u: any) => u.id !== id))
+        setUsers(users.filter((u: User) => u.id !== id))
     }
 
     if (!stats) return (
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {users.map((user: any) => (
+                                {users.map((user: User) => (
                                     <tr key={user.id}>
                                         <td>{user.nom}</td>
                                         <td>{user.email}</td>
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {analyses.map((analyse: any) => (
+                                {analyses.map((analyse: Analyse) => (
                                     <tr key={analyse.id}>
                                         <td>{analyse.marque} {analyse.modele} — {analyse.annee}</td>
                                         <td>{analyse.nom}</td>

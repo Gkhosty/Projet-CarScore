@@ -12,7 +12,7 @@ export default function Register() {
     const navigate = useNavigate();
     const [succes, setSucces] = useState(false);
 
-    async function handleRegister(event: any) {
+    async function handleRegister(event: { preventDefault: () => void }) {
         event.preventDefault()
 
         // validation Zod

@@ -9,7 +9,7 @@ export default function ResetPassword() {
     const [message, setMessage] = useState('')
     const [erreur, setErreur] = useState('')
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: { preventDefault: () => void }) {
         e.preventDefault()
         setErreur('')
         setMessage('')
@@ -37,7 +37,7 @@ export default function ResetPassword() {
     }
 
     return (
-        
+
         <div style={{ textAlign: 'center', padding: '100px 20px' }}>
             <h2>🔐 Nouveau mot de passe</h2>
             <p>Entrez votre nouveau mot de passe.</p>
