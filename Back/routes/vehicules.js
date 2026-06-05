@@ -4,12 +4,15 @@ const sql = neon(process.env.DATABASE_URL);
 const router = express.Router();
 const {verifieToken} = require('../middleware/auth');
 const { vehiculeSchema } = require('../utils/validators');
-
 const { asyncHandler } = require('../utils/handler');
+
+// Cache en mémoire — chargé une seule fois au lieu de à chaque requête
+let marquesCache = null
 
 router.post('/vehicules', verifieToken, asyncHandler(async(req, res) => {
 
     const { marque, modele, annee, kilometrage, carburant, region, entretien, ct } = req.body;
+
     // Validation z pour le formulaire
     const result = vehiculeSchema.safeParse({
         marque,
@@ -24,15 +27,20 @@ router.post('/vehicules', verifieToken, asyncHandler(async(req, res) => {
     if(!result.success){
         return res.status(400).json({ erreur: result.error.issues[0].message });
     }
-       // Validation marque via NHTSA
-    const responseNHTSA = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json')
-    const dataNHTSA = await responseNHTSA.json()
-    const marquesAutorisees = dataNHTSA.Results.map(function(item) {
-        return item.Make_Name.toLowerCase()
-    })
-    if(!marquesAutorisees.includes(marque.toLowerCase())){
+
+    // Validation marque via NHTSA — avec cache
+    if (!marquesCache) {
+        const responseNHTSA = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json')
+        const dataNHTSA = await responseNHTSA.json()
+        marquesCache = dataNHTSA.Results.map(function(item) {
+            return item.Make_Name.toLowerCase()
+        })
+    }
+
+    if(!marquesCache.includes(marque.toLowerCase())){
         return res.status(400).json({ erreur: 'Marque invalide — veuillez choisir une marque dans la liste' })
     }
+
     // le middleware verifiertoken a deja decodé le token
     const user_id = req.user.id;
     const ajouterVehicule = await sql`INSERT INTO vehicules ( user_id, marque, modele, annee, kilometrage, carburant, region, entretien, ct )
@@ -58,9 +66,6 @@ router.delete('/vehicules/:id', verifieToken, asyncHandler(async(req, res) => {
     const id = parseInt(req.params.id)
     const result = await sql`DELETE FROM vehicules WHERE id = ${id} AND user_id = ${user_id}`;
     res.json(result);
-
-
 }));
-
 
 module.exports = router
