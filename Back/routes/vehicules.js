@@ -64,8 +64,11 @@ router.get('/vehicules', verifieToken, asyncHandler(async(req, res) => {
 router.delete('/vehicules/:id', verifieToken, asyncHandler(async(req, res) => {
     const user_id = req.user.id
     const id = parseInt(req.params.id)
-    const result = await sql`DELETE FROM vehicules WHERE id = ${id} AND user_id = ${user_id}`;
-    res.json(result);
+    const result = await sql`DELETE FROM vehicules WHERE id = ${id} AND user_id = ${user_id} RETURNING *`;
+    if (result.length === 0) {
+        return res.status(404).json({ erreur: 'Vehicule introuvable' });
+    }
+    res.json({ message: 'Vehicule supprime avec succes' });
 }));
 
 module.exports = router

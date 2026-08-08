@@ -128,7 +128,7 @@ export default function AddCar() {
                                                 .filter(function(marqueItem) {
                                                     return marqueItem.toLowerCase().includes(marque.toLowerCase())
                                                 })
-                                                .slice(0, 5)
+                                                .slice(0, 10)
                                                 .map(function(marqueItem) {
                                                     return (
                                                         <li key={marqueItem} onClick={function() {

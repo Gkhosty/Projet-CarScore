@@ -143,7 +143,6 @@ Projet-CarScore/
 │       │   ├── ScoreBar.tsx        → Barre de progression critères
 │       │   └── ProtectedRoute.tsx  → Protection des routes privées
 │       ├── utils/
-│       │   ├── scoring.ts          → Algorithme de scoring (frontend)
 │       │   └── validators.ts       → Schémas de validation Zod (frontend)
 │       ├── tests/
 │       │   └── scoring.test.ts     → Tests Vitest
@@ -223,7 +222,6 @@ Projet-CarScore/
 - Authentification par **tokens JWT** (24h)
 - Routes protégées via **middleware verifierToken**
 - Validation des inputs avec **Zod** côté serveur ET côté client
-- Limite de **5 véhicules** par utilisateur (backend + frontend)
 - **Requêtes paramétrées** contre l'injection SQL
 - Variables sensibles dans `.env` (jamais dans le code source)
 - Gestion d'erreurs centralisée via **asyncHandler + middlewareErreurs**
