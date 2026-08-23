@@ -47,7 +47,8 @@ body {
 
 /* CONTAINER
    Boîte centrale qui limite la largeur
-   du contenu et le centre sur la page */
+   du contenu et le centre sur la page.
+   Base = mobile : 90% de large. */
 .container {
   width: 90%;
   max-width: 1100px;
@@ -75,7 +76,9 @@ header {
     padding: 8px 16px;
 }
 
-/* Le nav contient le logo + les boutons */
+/* Le nav contient le logo + les boutons.
+   Base = mobile : le menu est masqué,
+   remplacé par le hamburger (voir plus bas). */
 nav {
   display: flex;
   justify-content: space-between;
@@ -83,9 +86,31 @@ nav {
 }
 nav ul {
   list-style: none;
-  display: flex;
+  display: none;
   gap: 8px;
   align-items: center;
+}
+
+/* Menu ouvert en modal centré — n'a de sens
+   que sur mobile, tant que le hamburger existe. */
+nav ul.ouvert {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--blanc);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  width: 280px;
+  gap: 12px;
+}
+nav ul.ouvert li button {
+  width: 100%;
+  text-align: center;
 }
 
 /* Boutons dans la navigation */
@@ -116,10 +141,10 @@ nav ul button:hover {
 }
 
 /* MENU HAMBURGER
-   Icône visible seulement sur mobile
-   pour ouvrir/fermer le menu */
+   Base = mobile : icône visible pour
+   ouvrir/fermer le menu. */
 .hamburger {
-  display: none;
+  display: block;
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -152,14 +177,15 @@ main section > h2 {
 
 /* HERO
    Grande section d'accueil centrée
-   sur la page Home */
+   sur la page Home.
+   Base = mobile : titre le plus petit. */
 .hero {
   text-align: center;
   padding: 80px 0;
 }
 .hero h2 {
   font-family: 'Fraunces', serif;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: 900;
   margin-bottom: 20px;
   color: var(--texte);
@@ -225,7 +251,10 @@ main section > h2 {
 
 /* GRID
    Grille responsive qui s'adapte
-   automatiquement au nombre de colonnes */
+   automatiquement au nombre de colonnes.
+   auto-fit gère déjà le mobile tout seul :
+   avec un minimum de 250px, une seule colonne
+   tient sur un écran de téléphone. */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -285,7 +314,7 @@ input::placeholder {
 input:focus, select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.35);
 }
 select option {
   background-color: var(--blanc);
@@ -329,10 +358,11 @@ button:hover {
   position: relative; /* Pour l'autocomplétion positionnée en absolu */
 }
 
-/* Deux colonnes côte à côte (ex: année + kilométrage) */
+/* Deux colonnes côte à côte (ex: année + kilométrage).
+   Base = mobile : une seule colonne. */
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
@@ -430,10 +460,11 @@ legend {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* Le grand chiffre du score */
+/* Le grand chiffre du score.
+   Base = mobile : la plus petite taille. */
 .dashboard-score {
   font-family: 'Fraunces', serif;
-  font-size: 5rem;
+  font-size: 3.5rem;
   font-weight: 900;
   color: var(--accent);
   line-height: 1;
@@ -480,7 +511,8 @@ legend {
 .score-red-bg   { background-color: #FEF2F2; color: var(--rouge); }
 
 /* SCORE GRID — PAGE HOME
-   Grille des 4 niveaux de score */
+   Grille des 4 niveaux de score.
+   Base = mobile : une seule colonne. */
 .score-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -581,9 +613,11 @@ legend {
 
 /* VEHICLE CARD
    Carte qui affiche les infos
-   d'un véhicule dans le dashboard */
+   d'un véhicule dans le dashboard.
+   Base = mobile : infos empilées en colonne. */
 .vehicle-card {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -622,7 +656,8 @@ legend {
 
 /* CRITERIA DETAIL
    Liste des 6 critères dans CarDetails
-   avec le score de chaque critère à droite */
+   avec le score de chaque critère à droite.
+   Base = mobile : infos empilées en colonne. */
 .criteria-detail-list {
   list-style: none;
   display: flex;
@@ -632,6 +667,7 @@ legend {
 }
 .criteria-detail-item {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -713,9 +749,10 @@ legend {
   font-weight: 700;
 }
 
-/* Grille des KPIs */
+/* Grille des KPIs.
+   Base = mobile : 2 colonnes. */
 .kpi-grid {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
 }
 
 /* Carte KPI avec bordure colorée en haut */
@@ -755,20 +792,21 @@ legend {
 .kpi-trend.down    { color: var(--rouge); }
 
 /* TABLE
-   Tableau des utilisateurs dans l'admin */
+   Tableau des utilisateurs dans l'admin.
+   Base = mobile : texte et cellules resserrés. */
 .table-wrapper {
   overflow-x: auto;
 }
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 thead {
   background-color: var(--fond);
 }
 th {
-  padding: 12px 16px;
+  padding: 8px 10px;
   text-align: left;
   font-weight: 700;
   color: var(--texte-2);
@@ -776,7 +814,7 @@ th {
   text-transform: uppercase;
 }
 td {
-  padding: 12px 16px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--bordure);
   color: var(--texte);
 }
@@ -853,12 +891,13 @@ tr:hover td {
 
 /* GRAPHIQUE ACTIVITÉ ADMIN
    Barres verticales qui montrent
-   l'activité par mois */
+   l'activité par mois.
+   Base = mobile : barres plus basses. */
 .chart-bars {
   display: flex;
   align-items: flex-end;
   gap: 4px;
-  height: 110px;
+  height: 80px;
   margin: 16px 0 8px;
 }
 .chart-bar {
@@ -979,10 +1018,12 @@ tr:hover td {
   align-items: center;
   gap: 12px;
 }
+
+/* Base = mobile : libellé plus étroit. */
 .score-bar-label {
   font-size: 0.82rem;
   font-weight: 700;
-  width: 160px;
+  width: 110px;
   flex-shrink: 0;
   color: var(--texte);
 }
@@ -1180,89 +1221,20 @@ footer {
     text-align: center;
 }
 
-/*RESPONSIVE — MOBILE (max 768px)
-   Adaptations pour les petits écrans*/
-@media (max-width: 768px) {
+/* ===================================================
+   RESPONSIVE — MOBILE FIRST
+   Tout ce qui précède est le style MOBILE par défaut.
+   On ajoute seulement des min-width pour AGRANDIR
+   à partir de là — jamais de max-width pour réduire.
+   =================================================== */
 
-  .hero h2 {
-    font-size: 1.8rem;
-  }
-  .dashboard-score {
-    font-size: 3.5rem;
-  }
-
-  /* Carte véhicule en colonne sur mobile */
-  .vehicle-card {
-    flex-direction: column;
-  }
-  .criteria-detail-item {
-    flex-direction: column;
-  }
-
-  /* Une seule colonne pour le formulaire */
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-  .score-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* 2 colonnes pour les KPIs sur mobile */
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  table {
-    font-size: 0.8rem;
-  }
-  th, td {
-    padding: 8px 10px;
-  }
-  .score-bar-label {
-    width: 110px;
-  }
-  .chart-bars {
-    height: 80px;
-  }
-
-  /* Menu hamburger visible sur mobile */
-  .hamburger {
-    display: block;
-  }
-
-  /* Menu caché par défaut sur mobile */
-  nav ul {
-    display: none;
-  }
-
-  /* Menu ouvert en modal centré */
-  nav ul.ouvert {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--blanc);
-    padding: 32px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    width: 280px;
-    gap: 12px;
-  }
-  nav ul.ouvert li button {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* RESPONSIVE — IPAD (769px à 1024px)
-   Adaptations pour les tablettes*/
-@media (min-width: 769px) and (max-width: 1024px) {
+/* TABLETTE — à partir de 769px */
+@media (min-width: 769px) {
 
   .container {
     width: 92%;
   }
+
   .hero h2 {
     font-size: 2rem;
   }
@@ -1270,11 +1242,7 @@ footer {
     font-size: 4rem;
   }
 
-  /* 2 colonnes sur tablette */
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .score-grid {
@@ -1283,14 +1251,38 @@ footer {
   .form-row {
     grid-template-columns: 1fr 1fr;
   }
+
+  /* Carte véhicule et critères repassent en ligne */
   .vehicle-card {
     flex-direction: row;
   }
+  .criteria-detail-item {
+    flex-direction: row;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 12px 16px;
+  }
+  .score-bar-label {
+    width: 160px;
+  }
+  .chart-bars {
+    height: 110px;
+  }
+
+  /* Le menu classique remplace le hamburger */
+  .hamburger {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+  }
 }
 
-/*
-   RESPONSIVE — DESKTOP (min 1025px)
-   Mise en page complète sur grand écran*/
+/* DESKTOP — à partir de 1025px */
 @media (min-width: 1025px) {
 
   .container {
@@ -1301,26 +1293,14 @@ footer {
   .hero h2 {
     font-size: 2.5rem;
   }
-
   .dashboard-score {
     font-size: 5rem;
   }
 
-  /* 3 colonnes sur desktop */
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  /* 4 colonnes pour les KPIs */
   .kpi-grid {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .score-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .vehicle-card {
-    flex-direction: row;
   }
 }
