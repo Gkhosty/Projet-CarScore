@@ -92,7 +92,10 @@ nav ul {
 }
 
 /* Menu ouvert en modal centré — n'a de sens
-   que sur mobile, tant que le hamburger existe. */
+   que sur mobile, tant que le hamburger existe.
+   Neutralisé dès 769px dans le bloc tablette
+   pour éviter que le state JS "ouvert" ne casse
+   la nav horizontale sur grand écran. */
 nav ul.ouvert {
   display: flex;
   flex-direction: column;
@@ -169,10 +172,6 @@ main section > h2 {
   margin-bottom: 8px;
   margin-top: 24px;
   color: var(--texte);
-}
-
-.score-block {
-  margin-top: 8px;
 }
 
 /* HERO
@@ -1273,12 +1272,26 @@ footer {
     height: 110px;
   }
 
-  /* Le menu classique remplace le hamburger */
+  /* Le menu classique remplace le hamburger.
+     On neutralise aussi nav ul.ouvert : si le state JS
+     "ouvert" reste actif après un resize/rotation depuis
+     mobile, la nav ne doit plus repasser en modal fixe. */
   .hamburger {
     display: none;
   }
-  nav ul {
+  nav ul,
+  nav ul.ouvert {
     display: flex;
+    flex-direction: row;
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: auto;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    z-index: auto;
   }
 }
 
